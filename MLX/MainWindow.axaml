@@ -1,0 +1,44 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="720" d:DesignHeight="350"
+        Width="720" Height="350"
+        MinWidth="720" MinHeight="350"
+        x:Class="MLX.MainWindow"
+        Title="MLX">
+        
+        <Grid ColumnDefinitions="*, *" ColumnSpacing="40" Margin="30">
+                <Grid RowDefinitions="Auto, Auto, Auto, *, Auto, Auto, Auto" RowSpacing="15">
+                        <Label Grid.Row="0">IWAD</Label>
+                        <ComboBox Name="IWADComboBox" Grid.Row="1" HorizontalAlignment="Stretch" SelectedIndex="0">None</ComboBox>
+                        <Label Grid.Row="2">Source Port</Label>
+                        <Grid Grid.Row="3" ColumnDefinitions="*, Auto, Auto" ColumnSpacing="15">
+                                <ComboBox Name="SourceportComboBox" Grid.Column="0" HorizontalAlignment="Stretch" SelectedIndex="0">None</ComboBox>
+                                <Button Name="AddSourcePortButton" Grid.Column="1" VerticalAlignment="Top" Click="AddSourcePortButton_OnClick">+</Button>
+                                <Button Name="RemoveSourcePortButton" Grid.Column="2" VerticalAlignment="Top" Click='RemoveSourcePortButton_OnClick'>-</Button>
+                        </Grid>
+                        <Label Grid.Row="4">Extra Parameters</Label>
+                        <TextBox Name="ExtraParametersTextBox" Grid.Row="5"></TextBox>
+                        <Button Name="LaunchButton" Grid.Row="6" HorizontalAlignment="Stretch" Click="LaunchButton_OnClick">Launch</Button>
+                </Grid>
+                
+                <Grid Grid.Column="1" RowDefinitions="Auto, *, Auto, Auto" RowSpacing="15">
+                        <Label>External Files</Label>
+                        <ListBox Name="ExternalFilesListBox" Grid.Row="1" ></ListBox>
+                        <Grid Grid.Row="2" ColumnDefinitions="Auto, *, Auto, *, Auto" ColumnSpacing="10">
+                                <Button Name="AddFileButton" HorizontalAlignment="Left" Click="AddFileButton_OnClick">+</Button>
+                                <Button Name="RemoveFileButton" Grid.Column="1" HorizontalAlignment="Left" Click="RemoveFileButton_OnClick">-</Button>
+                                <Button Name="ClearButton" Grid.Column="2" Click="ClearButton_OnClick">Clear List</Button>
+                                <Button Name="ReorderFileUpButton" Grid.Column="3" HorizontalAlignment="Right" Click="ReorderFileUpButton_OnClick">Up</Button>
+                                <Button Name="ReorderFileDownButton" Grid.Column="4" HorizontalAlignment="Right" Click="ReorderFileDownButton_OnClick">Down</Button>
+                        </Grid>
+                        
+                        <Grid Grid.Row="3" ColumnDefinitions="*, Auto, Auto" ColumnSpacing="15">
+                                <ComboBox Name="PresetsComboBox" HorizontalAlignment="Stretch" SelectionChanged="PresetsComboBox_OnSelectionChanged"></ComboBox>
+                                <Button Name="AddPresetButton" Grid.Column="1" Click="AddPresetButton_OnClick">+</Button>
+                                <Button Name="RemovePresetButton" Grid.Column="2" Click="RemovePresetButton_OnClick">-</Button>
+                        </Grid>
+                </Grid>
+        </Grid>
+</Window>

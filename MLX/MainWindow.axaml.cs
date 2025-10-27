@@ -14,7 +14,6 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        InitializeLauncher();
     }
 
     private void RefreshPresetsComboBox()
@@ -48,11 +47,16 @@ public partial class MainWindow : Window
             ExternalFilesListBox.Items.Add(Path.GetFileName(file));
     }
     
-    private void InitializeLauncher()
+    private void InitializeLauncher(object? sender, RoutedEventArgs e)
     {
         if (Directory.Exists(Constants.MLX_PATH))
         {
             // IWADs
+            if (Directory.GetFiles(Constants.MLX_IWADS).Length == 0)
+            {
+                var iwadWarning = new NoIWADWarning();
+                iwadWarning.ShowDialog(this);
+            }
             foreach (var file in Directory.GetFiles(Constants.MLX_IWADS))
                 IWADComboBox.Items.Add(Path.GetFileName(file));
             

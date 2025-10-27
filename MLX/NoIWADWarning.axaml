@@ -1,0 +1,16 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="150"
+        Width="400" Height="150"
+        CanResize="False"
+        x:Class="MLX.NoIWADWarning"
+        Title="Warning!"
+        Closed="Window_OnClosed">
+        <Grid RowDefinitions="Auto, Auto, Auto" RowSpacing="15" VerticalAlignment="Center">
+                <Label HorizontalAlignment="Center">No IWAD files detected!</Label>
+                <Label Grid.Row="1" HorizontalAlignment="Center">Please put them in "MLX__Data/IWADs" and restart MLX.</Label>
+                <Button Grid.Row="2" HorizontalAlignment="Center" Click="Button_OnClick">Click here to close MLX</Button>
+        </Grid>
+</Window>

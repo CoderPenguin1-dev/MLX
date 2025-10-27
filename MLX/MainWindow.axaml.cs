@@ -181,21 +181,24 @@ public partial class MainWindow : Window
     private async void AddPresetButton_OnClick(object? sender, RoutedEventArgs e)
     {
         Preset presetDialog = new Preset();
-        string presetName = await presetDialog.ShowDialog<string>(this);
-        List<string> presetFile =
-            [(string)SourceportComboBox.SelectedItem, (string)IWADComboBox.SelectedItem, ExtraParametersTextBox.Text];
-
-        string files = "";
-        foreach (string file in _externalFilePaths)
+        string presetName = await presetDialog.ShowDialog<string?>(this);
+        if (presetName != null)
         {
-            files += $"{file},";
+            List<string> presetFile =
+                [(string)SourceportComboBox.SelectedItem, (string)IWADComboBox.SelectedItem, ExtraParametersTextBox.Text];
+
+            string files = "";
+            foreach (string file in _externalFilePaths)
+            {
+                files += $"{file},";
+            }
+            files = files.TrimEnd(',');
+            presetFile.Add(files);
+            
+            File.WriteAllLines($"{Constants.MLX_PRESETS}/{presetName}.{Constants.MLX_PRESET_EXT}", presetFile);
+            RefreshPresetsComboBox();
+            PresetsComboBox.SelectedItem = presetName;
         }
-        files = files.TrimEnd(',');
-        presetFile.Add(files);
-        
-        File.WriteAllLines($"{Constants.MLX_PRESETS}/{presetName}.{Constants.MLX_PRESET_EXT}", presetFile);
-        RefreshPresetsComboBox();
-        PresetsComboBox.SelectedItem = presetName;
     }
     
     private void RemovePresetButton_OnClick(object? sender, RoutedEventArgs e)
@@ -240,12 +243,14 @@ public partial class MainWindow : Window
         }
     }
     #endregion
+    
     private async void AddSourcePortButton_OnClick(object? sender, RoutedEventArgs e)
     {
         var portWindow = new Sourceport();
-        string portName = await portWindow.ShowDialog<string>(this);
+        string portName = await portWindow.ShowDialog<string?>(this);
         RefreshSourcePortsComboBox();
-        SourceportComboBox.SelectedItem = portName;
+        if (portName != null)
+            SourceportComboBox.SelectedItem = portName;
     }
 
     private void RemoveSourcePortButton_OnClick(object? sender, RoutedEventArgs e)

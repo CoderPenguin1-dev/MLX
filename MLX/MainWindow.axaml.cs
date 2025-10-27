@@ -69,7 +69,8 @@ public partial class MainWindow : Window
             Directory.CreateDirectory(Constants.MLX_IWADS);
             Directory.CreateDirectory(Constants.MLX_PRESETS);
             Directory.CreateDirectory(Constants.MLX_PORTS);
-            
+            var iwadWarning = new NoIWADWarning();
+            iwadWarning.ShowDialog(this);
         }
     }
 

@@ -79,11 +79,16 @@ public partial class MainWindow : Window
         // Make sure either of these are actually selected.
         if (IWADComboBox.SelectedIndex == 0) return;
         if (SourceportComboBox.SelectedIndex == 0) return;
-        
-        string portPath = File.ReadAllLines($"{Constants.MLX_PORTS}/{SourceportComboBox.SelectedItem}.{Constants.MLX_PORT_EXT}")[0];
+
+        string[] portInfo =
+            File.ReadAllLines($"{Constants.MLX_PORTS}/{SourceportComboBox.SelectedItem}.{Constants.MLX_PORT_EXT}");
+        string portPath = portInfo[0];
+        string portArgs = portInfo[1];
         
         // Set up the arguments given to the port.
-        string args = $"-iwad {Constants.MLX_IWADS}/{IWADComboBox.SelectedItem}";
+        string args = "";
+        if (portInfo.Length > 0) args += $"{portArgs} ";
+        args += $"-iwad {Constants.MLX_IWADS}/{IWADComboBox.SelectedItem}";
         if (_externalFilePaths.Count > 0)
         {
             List<string> dehFiles = [];

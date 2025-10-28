@@ -73,6 +73,7 @@ public partial class MainWindow : Window
             if (Directory.GetFiles(Constants.MLX_IWADS).Length == 0)
             {
                 var iwadWarning = new NoIWADWarning();
+                iwadWarning.WindowStartupLocation = WindowStartupLocation.CenterOwner;
                 iwadWarning.ShowDialog(this);
             }
             foreach (var file in Directory.GetFiles(Constants.MLX_IWADS))
@@ -88,6 +89,7 @@ public partial class MainWindow : Window
             Directory.CreateDirectory(Constants.MLX_PRESETS);
             Directory.CreateDirectory(Constants.MLX_PORTS);
             var iwadWarning = new NoIWADWarning();
+            iwadWarning.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             iwadWarning.ShowDialog(this);
         }
     }
@@ -209,6 +211,7 @@ public partial class MainWindow : Window
     private async void AddPresetButton_OnClick(object? sender, RoutedEventArgs e)
     {
         Preset presetDialog = new Preset();
+        presetDialog.WindowStartupLocation = WindowStartupLocation.CenterOwner;
         string presetName = await presetDialog.ShowDialog<string?>(this);
         if (presetName != null)
         {
@@ -275,6 +278,7 @@ public partial class MainWindow : Window
     private async void AddSourcePortButton_OnClick(object? sender, RoutedEventArgs e)
     {
         var portWindow = new Sourceport();
+        portWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
         string portName = await portWindow.ShowDialog<string?>(this);
         RefreshSourcePortsComboBox();
         if (portName != null)

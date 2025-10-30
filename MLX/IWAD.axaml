@@ -20,15 +20,21 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="150"
-        Width="400" Height="150"
+        mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="300"
+        Width="450" Height="300"
         CanResize="False"
-        x:Class="MLX.NoIWADWarning"
-        Title="Warning!"
-        Closed="Window_OnClosed">
-        <Grid RowDefinitions="Auto, Auto, Auto" RowSpacing="15" VerticalAlignment="Center">
-                <Label HorizontalAlignment="Center">No IWAD files detected!</Label>
-                <Label Grid.Row="1" HorizontalAlignment="Center">Please put them in "MLX__Data/IWADs" and restart MLX.</Label>
-                <Button Grid.Row="2" HorizontalAlignment="Center" Click="Button_OnClick">Click here to close MLX</Button>
+        x:Class="MLX.IWAD"
+        Title="Add Game">
+        
+        <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto" RowSpacing="15" Margin="30">
+                <Label Grid.Row="0" HorizontalAlignment="Center">Game Name</Label>
+                <TextBox Name="IWADNameTextBox" Grid.Row="1" HorizontalAlignment="Stretch"></TextBox>
+                
+                <Label Grid.Row="2" HorizontalAlignment="Center">IWAD Path</Label>
+                <Grid Grid.Row="3" ColumnDefinitions="*, Auto" ColumnSpacing="15">
+                        <TextBox Name="IWADPathTextBox"></TextBox>
+                        <Button Grid.Column="1" Name="IWADPathButton" Click="IWADPathButton_OnClick">...</Button>
+                </Grid>
+                <Button Name="SaveIWADButton" Grid.Row="6" HorizontalAlignment="Center" Click="SaveIWADButton_OnClick">Add Game</Button>
         </Grid>
 </Window>

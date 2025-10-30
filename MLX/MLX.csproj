@@ -48,5 +48,9 @@
         <DependentUpon>Preset.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="IWAD.axaml.cs">
+        <DependentUpon>IWAD.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 </Project>

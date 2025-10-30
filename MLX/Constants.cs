@@ -29,4 +29,5 @@ internal static class Constants
     // File Extensions
     internal const string MLX_PORT_EXT = "mlx_port";
     internal const string MLX_PRESET_EXT = "mlx_preset";
+    internal const string MLX_IWAD_EXT = "mlx_iwad";
 }

@@ -29,8 +29,12 @@
         
         <Grid ColumnDefinitions="*, *" ColumnSpacing="40" Margin="30">
                 <Grid RowDefinitions="Auto, Auto, Auto, *, Auto, Auto, Auto" RowSpacing="15">
-                        <Label Grid.Row="0">IWAD</Label>
-                        <ComboBox Name="IWADComboBox" Grid.Row="1" HorizontalAlignment="Stretch" SelectedIndex="0">None</ComboBox>
+                        <Label Grid.Row="0">Game</Label>
+                        <Grid Grid.Row="1" ColumnDefinitions="*, Auto, Auto" ColumnSpacing="15">
+                                <ComboBox Name="IWADComboBox" Grid.Column="0" HorizontalAlignment="Stretch" SelectedIndex="0">None</ComboBox>
+                                <Button Name="AddIWADButton" Grid.Column="1" VerticalAlignment="Top" Click="AddIWADButton_OnClick">+</Button>
+                                <Button Name="RemoveIWADButton" Grid.Column="2" VerticalAlignment="Top" Click="RemoveIWADButton_OnClick">-</Button>
+                        </Grid>
                         <Label Grid.Row="2">Source Port</Label>
                         <Grid Grid.Row="3" ColumnDefinitions="*, Auto, Auto" ColumnSpacing="15">
                                 <ComboBox Name="SourceportComboBox" Grid.Column="0" HorizontalAlignment="Stretch" SelectedIndex="0">None</ComboBox>

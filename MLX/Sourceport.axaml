@@ -24,7 +24,7 @@
         Width="450" Height="350"
         CanResize="False"
         x:Class="MLX.Sourceport"
-        Title="Sourceport">
+        Title="Add Sourceport">
         
         <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto" RowSpacing="15" Margin="30">
                 <Label Grid.Row="0" HorizontalAlignment="Center">Sourceport Name</Label>
@@ -37,6 +37,6 @@
                 </Grid>
                 <Label Grid.Row="4" HorizontalAlignment="Center">Optional Sourceport Arguments</Label>
                 <TextBox Name="SourceportArgumentsTextBox" Grid.Row="5"></TextBox>
-                <Button Name="SaveSourceportButton" Grid.Row="6" HorizontalAlignment="Center" Click="SaveSourceportButton_OnClick">Save Sourceport</Button>
+                <Button Name="SaveSourceportButton" Grid.Row="6" HorizontalAlignment="Center" Click="SaveSourceportButton_OnClick">Add Sourceport</Button>
         </Grid>
 </Window>

@@ -45,18 +45,24 @@ public partial class MainWindow : Window
             PresetsComboBox.SelectedItem = selectedItem;
         else PresetsComboBox.SelectedIndex = 0;
     }
-    
-    private void RefreshSourcePortsComboBox()
+
+    private void RefreshComboBox(ref ComboBox comboBox, string path)
     {
-        string selectedItem = (string)SourceportComboBox.SelectedItem;
-        SourceportComboBox.Items.Clear();
-        SourceportComboBox.Items.Add("None");
-        foreach (var port in Directory.GetFiles(Constants.MLX_PORTS))
-            SourceportComboBox.Items.Add(Path.GetFileNameWithoutExtension(port));
-        if (SourceportComboBox.Items.Contains(selectedItem))
-            SourceportComboBox.SelectedItem = selectedItem;
-        else SourceportComboBox.SelectedIndex = 0;
+        string selectedItem = (string)comboBox.SelectedItem;
+        comboBox.Items.Clear();
+        comboBox.Items.Add("None");
+        foreach (var item in Directory.GetFiles(path))
+            comboBox.Items.Add(Path.GetFileNameWithoutExtension(item));
+        if (comboBox.Items.Contains(selectedItem))
+            comboBox.SelectedItem = selectedItem;
+        else comboBox.SelectedIndex = 0;
     }
+    
+    private void RefreshSourcePortsComboBox() =>
+        RefreshComboBox(ref SourceportComboBox, Constants.MLX_PORTS);
+
+    private void RefreshIWADsComboBox() =>
+        RefreshComboBox(ref IWADComboBox, Constants.MLX_IWADS);
 
     private void RefreshExternalFilesListBox()
     {
@@ -69,18 +75,9 @@ public partial class MainWindow : Window
     {
         if (Directory.Exists(Constants.MLX_PATH))
         {
-            // IWADs
-            if (Directory.GetFiles(Constants.MLX_IWADS).Length == 0)
-            {
-                var iwadWarning = new NoIWADWarning();
-                iwadWarning.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                iwadWarning.ShowDialog(this);
-            }
-            foreach (var file in Directory.GetFiles(Constants.MLX_IWADS))
-                IWADComboBox.Items.Add(Path.GetFileName(file));
-            
             RefreshPresetsComboBox();
             RefreshSourcePortsComboBox();
+            RefreshIWADsComboBox();
         }
         else
         {
@@ -88,9 +85,6 @@ public partial class MainWindow : Window
             Directory.CreateDirectory(Constants.MLX_IWADS);
             Directory.CreateDirectory(Constants.MLX_PRESETS);
             Directory.CreateDirectory(Constants.MLX_PORTS);
-            var iwadWarning = new NoIWADWarning();
-            iwadWarning.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            iwadWarning.ShowDialog(this);
         }
     }
 
@@ -108,7 +102,8 @@ public partial class MainWindow : Window
         // Set up the arguments given to the port.
         string args = "";
         if (portInfo.Length > 0) args += $"{portArgs} ";
-        args += $"-iwad {Constants.MLX_IWADS}/{IWADComboBox.SelectedItem}";
+        string iwadPath = File.ReadAllLines($"{Constants.MLX_IWADS}/{IWADComboBox.SelectedItem}.{Constants.MLX_IWAD_EXT}")[0];
+        args += $"-iwad {iwadPath}";
         if (_externalFilePaths.Count > 0)
         {
             List<string> dehFiles = [];
@@ -292,6 +287,26 @@ public partial class MainWindow : Window
             File.Delete($"{Constants.MLX_PORTS}/{SourceportComboBox.SelectedItem}.{Constants.MLX_PORT_EXT}");
             SourceportComboBox.Items.RemoveAt(SourceportComboBox.SelectedIndex);
             SourceportComboBox.SelectedIndex = 0; // Reset to "None."
+        }
+    }
+
+    private async void AddIWADButton_OnClick(object? sender, RoutedEventArgs e)
+    {
+        var iwadWindow = new IWAD();
+        iwadWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+        string iwadName = await iwadWindow.ShowDialog<string?>(this);
+        RefreshIWADsComboBox();
+        if (iwadName != null)
+            IWADComboBox.SelectedItem = iwadName;
+    }
+
+    private void RemoveIWADButton_OnClick(object? sender, RoutedEventArgs e)
+    {
+        if (IWADComboBox.SelectedIndex != 0)
+        {
+            File.Delete($"{Constants.MLX_IWADS}/{IWADComboBox.SelectedItem}.{Constants.MLX_IWAD_EXT}");
+            IWADComboBox.Items.RemoveAt(IWADComboBox.SelectedIndex);
+            IWADComboBox.SelectedIndex = 0; // Reset to "None."
         }
     }
 }

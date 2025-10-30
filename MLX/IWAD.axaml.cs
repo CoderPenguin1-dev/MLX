@@ -65,8 +65,9 @@ public partial class IWAD : Window
     {
         FilePickerOpenOptions options = new()
         {
-            Title = "Select IWAD file",
-            AllowMultiple = false
+            Title = "Select game file",
+            AllowMultiple = false,
+            FileTypeFilter = [FileFilters.Games, FileFilters.WAD, FileFilters.IPK3, FileFilters.All]
         };
         var files = await StorageProvider.OpenFilePickerAsync(options);
         if (files?.Count > 0)

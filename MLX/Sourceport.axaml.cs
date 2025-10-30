@@ -38,7 +38,7 @@ public partial class Sourceport : Window
     {
         FilePickerOpenOptions options = new()
         {
-            Title = "Select source port",
+            Title = "Select source port executable",
             AllowMultiple = false
         };
         var files = await StorageProvider.OpenFilePickerAsync(options);

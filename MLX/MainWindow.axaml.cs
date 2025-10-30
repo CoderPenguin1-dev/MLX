@@ -139,8 +139,12 @@ public partial class MainWindow : Window
     {
         FilePickerOpenOptions options = new()
         {
-            Title = "Select file.",
-            AllowMultiple = true
+            Title = "Select file",
+            AllowMultiple = true,
+            FileTypeFilter = 
+                [FileFilters.DoomModFiles, FileFilters.WAD, FileFilters.PK3, 
+                FileFilters.PK7, FileFilters.PKE, FileFilters.DEH,
+                FileFilters.BEX, FileFilters.All]
         };
         var files = await StorageProvider.OpenFilePickerAsync(options);
 

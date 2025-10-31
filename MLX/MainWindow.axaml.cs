@@ -81,6 +81,13 @@ public partial class MainWindow : Window
             Directory.CreateDirectory(Constants.MLX_PRESETS);
             Directory.CreateDirectory(Constants.MLX_PORTS);
         }
+        // RpcClient.Initialize();
+        RpcClient.SetPresence("Idle In Launcher", null);
+    }
+
+    private void DeinitializeLauncher(object? sender, EventArgs e)
+    {
+        RpcClient.Dispose();
     }
 
     private void LaunchButton_OnClick(object? sender, RoutedEventArgs e)
@@ -146,7 +153,10 @@ public partial class MainWindow : Window
             FileName = portPath,
             Arguments = args
         };
+        
+        RpcClient.SetPresence($"Playing in {SourceportComboBox.SelectedItem}", $"{IWADComboBox.SelectedItem}");
         Process.Start(startInfo).WaitForExit();
+        RpcClient.SetPresence("Idle In Launcher", null);
     }
 
     #region External File Manager

@@ -25,7 +25,8 @@
         MinWidth="720" MinHeight="350"
         x:Class="MLX.MainWindow"
         Title="MLX"
-        Loaded="InitializeLauncher">
+        Loaded="InitializeLauncher"
+        Closed="DeinitializeLauncher">
         
         <Grid ColumnDefinitions="*, *" ColumnSpacing="40" Margin="30">
                 <Grid RowDefinitions="Auto, Auto, Auto, *, Auto, Auto, Auto" RowSpacing="15">

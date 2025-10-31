@@ -33,7 +33,12 @@ internal static class RpcClient
             Timestamps = new Timestamps()
             {
                 Start = Timestamps.Now.Start
-            }
+            },
+            Buttons = [new Button()
+            {
+                Label = "View On GitHub",
+                Url = "https://github.com/CoderPenguin1-dev/MLX"
+            }],
         });
     }
 

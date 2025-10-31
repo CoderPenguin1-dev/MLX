@@ -10,6 +10,8 @@ The main goal is to be simple, easy to use, and heavily portable (in the sense i
 The UI is built to be similar to ZDL, but not have the sub-menus that ZDL had. 
 Everything you need is on the main screen.
 
+MLX attempts to be the successor to Minty Launcher in some ways, but is not the same.
+
 # Building
 ## Prerequisites
 * [.NET 9 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
@@ -47,3 +49,7 @@ The AmazDooM font is under the [CC-BY-NC 3.0 License](http://creativecommons.org
 MLX utilizes the Avalonia framework for its UI.
 
 Avalonia is under the [MIT License](https://avaloniaui.net/legal-center/avalonia-license).
+
+MLX utilizes and adapts some code from Minty Launcher.
+
+Minty Launcher is under the [MIT License](https://github.com/CoderPenguin1-dev/Minty-Launcher/blob/master/LICENSE.MD)

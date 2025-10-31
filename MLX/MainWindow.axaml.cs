@@ -34,35 +34,30 @@ public partial class MainWindow : Window
         InitializeComponent();
     }
 
-    private void RefreshPresetsComboBox()
-    {
-        string selectedItem = (string)PresetsComboBox.SelectedItem;
-        PresetsComboBox.Items.Clear();
-        PresetsComboBox.Items.Add("None");
-        foreach (var preset in Directory.GetFiles(Constants.MLX_PRESETS))
-            PresetsComboBox.Items.Add(Path.GetFileNameWithoutExtension(preset));
-        if (PresetsComboBox.Items.Contains(selectedItem))
-            PresetsComboBox.SelectedItem = selectedItem;
-        else PresetsComboBox.SelectedIndex = 0;
-    }
 
-    private void RefreshComboBox(ref ComboBox comboBox, string path)
+    private void RefreshComboBox(ref ComboBox comboBox, string path, string extension)
     {
         string selectedItem = (string)comboBox.SelectedItem;
         comboBox.Items.Clear();
         comboBox.Items.Add("None");
         foreach (var item in Directory.GetFiles(path))
-            comboBox.Items.Add(Path.GetFileNameWithoutExtension(item));
+        {
+            if (item.EndsWith(extension))
+                comboBox.Items.Add(Path.GetFileNameWithoutExtension(item));
+        }
         if (comboBox.Items.Contains(selectedItem))
             comboBox.SelectedItem = selectedItem;
         else comboBox.SelectedIndex = 0;
     }
     
+    private void RefreshPresetsComboBox() =>
+        RefreshComboBox(ref PresetsComboBox, Constants.MLX_PRESETS, Constants.MLX_PRESET_EXT);
+    
     private void RefreshSourcePortsComboBox() =>
-        RefreshComboBox(ref SourceportComboBox, Constants.MLX_PORTS);
+        RefreshComboBox(ref SourceportComboBox, Constants.MLX_PORTS, Constants.MLX_PORT_EXT);
 
     private void RefreshIWADsComboBox() =>
-        RefreshComboBox(ref IWADComboBox, Constants.MLX_IWADS);
+        RefreshComboBox(ref IWADComboBox, Constants.MLX_IWADS, Constants.MLX_IWAD_EXT);
 
     private void RefreshExternalFilesListBox()
     {
@@ -101,25 +96,45 @@ public partial class MainWindow : Window
         
         // Set up the arguments given to the port.
         string args = "";
-        if (portInfo.Length > 0) args += $"{portArgs} ";
-        string iwadPath = File.ReadAllLines($"{Constants.MLX_IWADS}/{IWADComboBox.SelectedItem}.{Constants.MLX_IWAD_EXT}")[0];
+        if (portInfo.Length > 0) 
+            args += $"{portArgs} ";
+        
+        string iwadPath = 
+            File.ReadAllLines($"{Constants.MLX_IWADS}/{IWADComboBox.SelectedItem}.{Constants.MLX_IWAD_EXT}")[0];
         args += $"-iwad {iwadPath}";
+        
         if (_externalFilePaths.Count > 0)
         {
             List<string> dehFiles = [];
-            args += " -file";
+            List<string> bexFiles = [];
+            List<string> exFiles = [];
             foreach (string file in _externalFilePaths)
             {
-                if (file.EndsWith(".deh"))
+                if (file.ToLower().EndsWith(".deh"))
                     dehFiles.Add(file);
-                else args += $" \"{file}\"";
+                else if (file.ToLower().EndsWith(".bex"))
+                    bexFiles.Add(file);
+                else exFiles.Add(file);
+            }
+
+            if (exFiles.Count > 0)
+            {
+                args += " -file";
+                foreach (string file in exFiles)
+                    args += $" \"{file}\"";
             }
             
-            // Handle found dehacked files.
+            // Handle found dehacked and bex patches.
             if (dehFiles.Count > 0)
             {
                 foreach (string file in dehFiles)
-                    args += $" -deh {file}";
+                    args += $" -deh \"{file}\"";
+            }
+
+            if (bexFiles.Count > 0)
+            {
+                foreach (string file in bexFiles)
+                    args += $" -bex \"{file}\"";
             }
         }
         

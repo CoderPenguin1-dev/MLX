@@ -36,9 +36,9 @@ MLX is programmed by CoderPenguin1.
 
 MLX is under the GPLv3 license. Read LICENSE.MD for more details.
 
-The MLX logo was created by Aries Dragon Productions.
+The MLX logo was created by Aries-Dragon Productions.
 
-The MLX logo is under the public domain.
+The MLX logo is under the [CC-BY-NC 4.0 License](https://creativecommons.org/licenses/by-nc/4.0/).
 
 MLX utilizes the Avalonia framework for its UI.
 

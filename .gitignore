@@ -2,3 +2,7 @@ MLX/bin/
 MLX/obj/
 .idea/
 MLX.sln.DotSettings.user
+
+# Publish files
+publish.sh
+publish/

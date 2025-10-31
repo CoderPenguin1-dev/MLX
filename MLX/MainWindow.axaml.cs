@@ -85,11 +85,6 @@ public partial class MainWindow : Window
         RpcClient.SetPresence("Idle In Launcher", null);
     }
 
-    private void DeinitializeLauncher(object? sender, EventArgs e)
-    {
-        RpcClient.Dispose();
-    }
-
     private void LaunchButton_OnClick(object? sender, RoutedEventArgs e)
     {
         // Make sure either of these are actually selected.
@@ -154,7 +149,9 @@ public partial class MainWindow : Window
             Arguments = args
         };
         
-        RpcClient.SetPresence($"Playing in {SourceportComboBox.SelectedItem}", $"{IWADComboBox.SelectedItem}");
+        // Discord Rich Presence
+        RpcClient.SetPresence($"Playing in {SourceportComboBox.SelectedItem}", 
+            RpcClient.PlayingPresenceState(_externalFilePaths.ToArray(), (string)IWADComboBox.SelectedItem));
         Process.Start(startInfo).WaitForExit();
         RpcClient.SetPresence("Idle In Launcher", null);
     }

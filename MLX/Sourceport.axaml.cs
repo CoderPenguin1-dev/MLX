@@ -44,8 +44,6 @@ public partial class Sourceport : Window
         var files = await StorageProvider.OpenFilePickerAsync(options);
         if (files?.Count > 0)
             SourceportPathTextBox.Text = files[0].TryGetLocalPath();
-        else
-            SourceportPathTextBox.Text = null;
     }
 
     private void SaveSourceportButton_OnClick(object? sender, RoutedEventArgs e)

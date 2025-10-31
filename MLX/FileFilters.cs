@@ -49,6 +49,11 @@ internal static class FileFilters
         Patterns = ["*.ipk3"]
     };
 
+    internal static readonly FilePickerFileType Applications = new("Executables")
+    {
+        Patterns = ["*.exe", "*.appimage"]
+    };
+
     // Here so I could get a custom message.
     internal static readonly FilePickerFileType All = new("All Files")
     {

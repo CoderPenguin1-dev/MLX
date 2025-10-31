@@ -40,6 +40,10 @@ The MLX logo was created by Aries-Dragon Productions.
 
 The MLX logo is under the [CC-BY-NC 4.0 License](https://creativecommons.org/licenses/by-nc/4.0/).
 
+The MLX logo utilizes a modified version of the AmazDooM font by AmazingMax.
+
+The AmazDooM font is under the [CC-BY-NC 3.0 License](http://creativecommons.org/licenses/by-nc/3.0).
+
 MLX utilizes the Avalonia framework for its UI.
 
 Avalonia is under the [MIT License](https://avaloniaui.net/legal-center/avalonia-license).

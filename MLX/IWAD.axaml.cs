@@ -37,7 +37,7 @@ public partial class IWAD : Window
     private readonly string[] _gameNames =
     [
         "The Ultimate Doom", "DOOM Shareware", "Doom II: Hell On Earth", 
-        "TNT Evilution", "The Plutonia Experiment", "Chex Quest",
+        "TNT: Evilution", "The Plutonia Experiment", "Chex Quest",
         "Chex Quest 3: Vanilla", "Chex Quest 3", "Hexen: Beyond Heretic",
         "Heretic"
     ];

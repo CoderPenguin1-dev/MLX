@@ -241,9 +241,7 @@ public partial class MainWindow : Window
 
             string files = "";
             foreach (string file in _externalFilePaths)
-            {
                 files += $"{file},";
-            }
             files = files.TrimEnd(',');
             presetFile.Add(files);
             
@@ -275,7 +273,8 @@ public partial class MainWindow : Window
         }
         else if (PresetsComboBox.SelectedIndex > 0)
         {
-            string[] presetFile = File.ReadAllLines($"{Constants.MLX_PRESETS}/{PresetsComboBox.SelectedItem}.{Constants.MLX_PRESET_EXT}");
+            string[] presetFile = 
+                File.ReadAllLines($"{Constants.MLX_PRESETS}/{PresetsComboBox.SelectedItem}.{Constants.MLX_PRESET_EXT}");
 
             if (SourceportComboBox.Items.Contains(presetFile[0]))
                 SourceportComboBox.SelectedItem = presetFile[0];

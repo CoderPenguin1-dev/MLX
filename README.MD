@@ -53,8 +53,8 @@ Avalonia is under the [MIT License](https://avaloniaui.net/legal-center/avalonia
 
 MLX utilizes DiscordRichPresence (Discord-RPC-CSharp).
 
-Discord-RPC-CSharp is under the [MIT License](https://github.com/Lachee/discord-rpc-csharp/blob/master/LICENSE)
+Discord-RPC-CSharp is under the [MIT License](https://github.com/Lachee/discord-rpc-csharp/blob/master/LICENSE).
 
 MLX utilizes and adapts some code from Minty Launcher.
 
-Minty Launcher is under the [MIT License](https://github.com/CoderPenguin1-dev/Minty-Launcher/blob/master/LICENSE.MD)
+Minty Launcher is under the [MIT License](https://github.com/CoderPenguin1-dev/Minty-Launcher/blob/master/LICENSE.MD).

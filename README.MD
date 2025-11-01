@@ -16,6 +16,7 @@ MLX attempts to be the successor to Minty Launcher in some ways, but is not the 
 ## Prerequisites
 * [.NET 9 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
 * [Avalonia](https://github.com/avaloniaui/avalonia)
+* [DiscordRichPresence](https://github.com/Lachee/discord-rpc-csharp)
 
 Clone the repo:
 ```
@@ -49,6 +50,10 @@ The AmazDooM font is under the [CC-BY-NC 3.0 License](http://creativecommons.org
 MLX utilizes the Avalonia framework for its UI.
 
 Avalonia is under the [MIT License](https://avaloniaui.net/legal-center/avalonia-license).
+
+MLX utilizes DiscordRichPresence (Discord-RPC-CSharp).
+
+Discord-RPC-CSharp is under the [MIT License](https://github.com/Lachee/discord-rpc-csharp/blob/master/LICENSE)
 
 MLX utilizes and adapts some code from Minty Launcher.
 

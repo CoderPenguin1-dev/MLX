@@ -5,7 +5,7 @@
        For more details visit https://learn.microsoft.com/en-us/windows/win32/sbscs/application-manifests -->
   <assemblyIdentity version="1.0.0.0" name="MLX.Desktop"/>
 
-<!--
+<!-- GPL Version 3
    MLX - A cross-platform Doom/id Tech 1 launcher
    Copyright (C) 2025 CoderPenguin1 @ coderpenguin1.dev@gmail.com
    

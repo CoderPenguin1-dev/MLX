@@ -1,4 +1,4 @@
-/*
+/* GPL Version 3
    MLX - A cross-platform Doom/id Tech 1 launcher
    Copyright (C) 2025 CoderPenguin1 @ coderpenguin1.dev@gmail.com
    
@@ -81,8 +81,9 @@ public partial class MainWindow : Window
             Directory.CreateDirectory(Constants.MLX_PRESETS);
             Directory.CreateDirectory(Constants.MLX_PORTS);
         }
-        // RpcClient.Initialize();
-        RpcClient.SetPresence("Idle In Launcher", null);
+        
+        if (RpcClient.Initialized) // This is here literally just for the visual designer. Wow.
+            RpcClient.SetPresence("Idle In Launcher", null);
     }
 
     private void LaunchButton_OnClick(object? sender, RoutedEventArgs e)

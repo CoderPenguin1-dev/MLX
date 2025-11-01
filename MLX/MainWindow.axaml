@@ -20,8 +20,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="720" d:DesignHeight="350"
-        Width="720" Height="350"
+        mc:Ignorable="d" d:DesignWidth="720" d:DesignHeight="380"
+        Width="720" Height="380"
         MinWidth="720" MinHeight="350"
         x:Class="MLX.MainWindow"
         Title="MLX"
@@ -46,7 +46,7 @@
                         <Button Name="LaunchButton" Grid.Row="6" HorizontalAlignment="Stretch" Click="LaunchButton_OnClick">Launch</Button>
                 </Grid>
                 
-                <Grid Grid.Column="1" RowDefinitions="Auto, *, Auto, Auto" RowSpacing="15">
+                <Grid Grid.Column="1" RowDefinitions="Auto, *, Auto, Auto, Auto" RowSpacing="15">
                         <Label>External Files</Label>
                         <ListBox Name="ExternalFilesListBox" Grid.Row="1" ></ListBox>
                         <Grid Grid.Row="2" ColumnDefinitions="Auto, *, Auto, *, Auto" ColumnSpacing="10">
@@ -57,7 +57,8 @@
                                 <Button Name="ReorderFileDownButton" Grid.Column="4" HorizontalAlignment="Right" Click="ReorderFileDownButton_OnClick">Down</Button>
                         </Grid>
                         
-                        <Grid Grid.Row="3" ColumnDefinitions="*, Auto, Auto" ColumnSpacing="15">
+                        <Label Grid.Row="3">Presets</Label>
+                        <Grid Grid.Row="4" ColumnDefinitions="*, Auto, Auto" ColumnSpacing="15">
                                 <ComboBox Name="PresetsComboBox" HorizontalAlignment="Stretch" SelectionChanged="PresetsComboBox_OnSelectionChanged"></ComboBox>
                                 <Button Name="AddPresetButton" Grid.Column="1" Click="AddPresetButton_OnClick">+</Button>
                                 <Button Name="RemovePresetButton" Grid.Column="2" Click="RemovePresetButton_OnClick">-</Button>

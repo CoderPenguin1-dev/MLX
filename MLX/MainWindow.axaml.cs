@@ -108,6 +108,7 @@ public partial class MainWindow : Window
         
         if (_externalFilePaths.Count > 0)
         {
+            // Sort file types.
             List<string> dehFiles = [];
             List<string> bexFiles = [];
             List<string> exFiles = [];
@@ -120,6 +121,7 @@ public partial class MainWindow : Window
                 else exFiles.Add(file);
             }
 
+            // Handle general file types.
             if (exFiles.Count > 0)
             {
                 args += " -file";
@@ -150,10 +152,11 @@ public partial class MainWindow : Window
             Arguments = args
         };
         
-        // Discord Rich Presence
         RpcClient.SetPresence($"Playing in {SourceportComboBox.SelectedItem}", 
             RpcClient.PlayingPresenceState(_externalFilePaths.ToArray(), (string)IWADComboBox.SelectedItem));
+        
         Process.Start(startInfo).WaitForExit();
+        
         RpcClient.SetPresence("Idle In Launcher", null);
     }
 

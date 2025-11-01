@@ -37,7 +37,7 @@ It should open up afterwards. The build will be in `MLX\bin\Debug\net9.0`.
 # Credits & Legalese
 MLX is programmed by CoderPenguin1.
 
-MLX is under the GPLv3 license. Read LICENSE.MD for more details.
+MLX is under the GPLv3 license. Read COPYING for more details.
 
 The MLX logo was created by Aries-Dragon Productions.
 

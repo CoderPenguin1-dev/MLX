@@ -35,6 +35,7 @@ public partial class MainWindow : Window
     }
 
 
+    #region Refresh Boxes
     private void RefreshComboBox(ref ComboBox comboBox, string path, string extension)
     {
         string selectedItem = (string)comboBox.SelectedItem;
@@ -65,6 +66,7 @@ public partial class MainWindow : Window
         foreach (var file in _externalFilePaths)
             ExternalFilesListBox.Items.Add(Path.GetFileName(file));
     }
+    #endregion
     
     private void InitializeLauncher(object? sender, RoutedEventArgs e)
     {
@@ -273,7 +275,7 @@ public partial class MainWindow : Window
             IWADComboBox.SelectedIndex = 0;
             SourceportComboBox.SelectedIndex = 0;
             ExtraParametersTextBox.Text = null;
-            ExternalFilesListBox.Items.Clear();
+            _externalFilePaths.Clear();
         }
         else if (PresetsComboBox.SelectedIndex > 0)
         {
@@ -294,8 +296,8 @@ public partial class MainWindow : Window
             if (presetFile[3].Length > 0)
                 foreach (string file in presetFile[3].Split(','))
                     _externalFilePaths.Add(file);
-            RefreshExternalFilesListBox();
         }
+        RefreshExternalFilesListBox();
     }
     #endregion
     

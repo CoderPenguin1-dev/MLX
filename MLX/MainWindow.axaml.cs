@@ -226,7 +226,7 @@ public partial class MainWindow : Window
     {
         Preset presetDialog = new Preset();
         presetDialog.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-        string presetName = await presetDialog.ShowDialog<string?>(this);
+        string? presetName = await presetDialog.ShowDialog<string?>(this);
         if (presetName != null)
         {
             List<string> presetFile =
@@ -293,7 +293,7 @@ public partial class MainWindow : Window
     {
         var portWindow = new Sourceport();
         portWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-        string portName = await portWindow.ShowDialog<string?>(this);
+        string? portName = await portWindow.ShowDialog<string?>(this);
         RefreshSourcePortsComboBox();
         if (portName != null)
             SourceportComboBox.SelectedItem = portName;
@@ -313,7 +313,7 @@ public partial class MainWindow : Window
     {
         var iwadWindow = new IWAD();
         iwadWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-        string iwadName = await iwadWindow.ShowDialog<string?>(this);
+        string? iwadName = await iwadWindow.ShowDialog<string?>(this);
         RefreshIWADsComboBox();
         if (iwadName != null)
             IWADComboBox.SelectedItem = iwadName;

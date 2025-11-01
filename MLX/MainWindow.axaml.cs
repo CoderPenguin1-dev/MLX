@@ -147,16 +147,31 @@ public partial class MainWindow : Window
         if (ExtraParametersTextBox.Text != null)
             args += $" {ExtraParametersTextBox.Text}";
 
-        ProcessStartInfo startInfo = new()
-        {
-            FileName = portPath,
-            Arguments = args
-        };
         
         RpcClient.SetPresence($"Playing in {SourceportComboBox.SelectedItem}", 
             RpcClient.PlayingPresenceState(_externalFilePaths.ToArray(), (string)IWADComboBox.SelectedItem));
-        
-        Process.Start(startInfo).WaitForExit();
+
+        ProcessStartInfo startInfo = new()
+        {
+            FileName = portPath,
+            Arguments = args,
+            UseShellExecute = false,
+            RedirectStandardError = true
+        };
+
+        using (var process = Process.Start(startInfo))
+        {
+            process.WaitForExit();
+            // Show the error dialog if an error was detected.
+            if (process.ExitCode != 0)
+            {
+                ErrorDialog errorDialog = new()
+                {
+                    ErrorText = process.StandardError.ReadToEnd()
+                };
+                errorDialog.ShowDialog(this);
+            }
+        }
         
         RpcClient.SetPresence("Idle In Launcher", null);
     }

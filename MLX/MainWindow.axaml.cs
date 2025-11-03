@@ -162,11 +162,12 @@ public partial class MainWindow : Window
         if (ExtraParametersTextBox.Text != null)
             args += $" {ExtraParametersTextBox.Text}";
 
-        if (!_usePresetNameWithRPC)
-            RpcClient.SetPresence($"Playing in {SourceportComboBox.SelectedItem}", 
-                RpcClient.PlayingPresenceState(_externalFilePaths.ToArray(), (string)IWADComboBox.SelectedItem));
-        else RpcClient.SetPresence($"Playing in {SourceportComboBox.SelectedItem}", $"{IWADComboBox.SelectedItem} [{PresetsComboBox.SelectedItem}]");
-
+        string details = $"Playing in {SourceportComboBox.SelectedItem}";
+        string state;
+        if (_usePresetNameWithRPC) state = $"{IWADComboBox.SelectedItem} [{PresetsComboBox.SelectedItem}]";
+        else state = RpcClient.PlayingPresenceState(_externalFilePaths.ToArray(), (string) IWADComboBox.SelectedItem);
+        RpcClient.SetPresence(details, state);
+        
         ProcessStartInfo startInfo = new()
         {
             FileName = portPath,

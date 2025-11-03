@@ -220,7 +220,7 @@ public partial class MainWindow : Window
         if (ExternalFilesListBox.SelectedIndex != -1)
         {
             _externalFilePaths.RemoveAt(ExternalFilesListBox.SelectedIndex);
-            ExternalFilesListBox.Items.RemoveAt(ExternalFilesListBox.SelectedIndex);
+            RefreshExternalFilesListBox();
         }
     }
 
@@ -332,7 +332,6 @@ public partial class MainWindow : Window
             
                 _usePresetNameWithRPC = bool.Parse(presetFile[4]);
             }
-            RefreshExternalFilesListBox();
         }
         catch
         {
@@ -346,6 +345,7 @@ public partial class MainWindow : Window
             };
             errorDialog.ShowDialog(this);
         }
+        RefreshExternalFilesListBox();
     }
     #endregion
     
@@ -364,8 +364,7 @@ public partial class MainWindow : Window
         if (SourceportComboBox.SelectedIndex != 0)
         {
             File.Delete($"{Constants.MLX_PORTS}/{SourceportComboBox.SelectedItem}.{Constants.MLX_PORT_EXT}");
-            SourceportComboBox.Items.RemoveAt(SourceportComboBox.SelectedIndex);
-            SourceportComboBox.SelectedIndex = 0; // Reset to "None."
+            RefreshSourcePortsComboBox();
         }
     }
 

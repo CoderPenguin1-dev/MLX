@@ -39,7 +39,7 @@ class Program
         }
         catch (Exception e)
         {
-            File.WriteAllText("mlx.error.log", e.Message);
+            File.WriteAllLines("mlx.error.log", [e.Message, e.StackTrace]);
         }
     }
 

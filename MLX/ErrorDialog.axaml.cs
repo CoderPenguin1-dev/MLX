@@ -7,7 +7,7 @@ namespace MLX;
 
 public partial class ErrorDialog : Window
 {
-    internal string ErrorText { get; set; } = "";
+    internal string Message { get; set; } = "";
     public ErrorDialog()
     {
         InitializeComponent();
@@ -15,7 +15,7 @@ public partial class ErrorDialog : Window
 
     private void Control_OnLoaded(object? sender, RoutedEventArgs e)
     {
-        ErrorLogTextBox.Text = ErrorText;
+        ErrorLogTextBox.Text = Message;
     }
 
     private void Button_OnClick(object? sender, RoutedEventArgs e)

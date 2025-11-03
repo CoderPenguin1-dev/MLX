@@ -25,9 +25,10 @@
         x:Class="MLX.Preset"
         Title="Preset">
         
-        <Grid RowDefinitions="Auto, Auto, Auto" RowSpacing="15" Margin="30">
+        <Grid RowDefinitions="Auto, Auto, Auto, Auto" RowSpacing="15" Margin="30">
                 <Label Grid.Row="0" HorizontalAlignment="Center">Preset Name</Label>
                 <TextBox Name="PresetNameTextBox" Grid.Row="1" HorizontalAlignment="Stretch"></TextBox>
-                <Button Name="SavePresetButton" Grid.Row="2" HorizontalAlignment="Center" Click="SavePresetButton_OnClick">Save Preset</Button>
+                <CheckBox Name="UsePresetNameCheckBox" Grid.Row="2" HorizontalAlignment="Center" IsChecked="False">Use Preset Name In Rich Presence</CheckBox>
+                <Button Name="SavePresetButton" Grid.Row="3" HorizontalAlignment="Center" Click="SavePresetButton_OnClick">Save Preset</Button>
         </Grid>
 </Window>

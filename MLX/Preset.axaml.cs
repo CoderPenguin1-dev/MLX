@@ -36,7 +36,8 @@ public partial class Preset : Window
     {
         if (PresetNameTextBox.Text != null && PresetNameTextBox.Text.ToLower() != "none")
         {
-            Close(PresetNameTextBox.Text);
+            string[] settings = [PresetNameTextBox.Text, UsePresetNameCheckBox.IsChecked.ToString()];
+            Close(settings);
         }
     }
 }

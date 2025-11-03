@@ -28,6 +28,7 @@ namespace MLX;
 public partial class MainWindow : Window
 {
     private List<string> _externalFilePaths = [];
+    private bool _usePresetNameWithRPC = false;
     public MainWindow()
     {
         InitializeComponent();
@@ -93,7 +94,7 @@ public partial class MainWindow : Window
             File.Delete("mlx.error.log");
             ErrorDialog errorDialog = new ErrorDialog()
             {
-                ErrorText = "This happened in your previous instance of MLX.\n" +
+                Message = "This happened in your previous instance of MLX.\n" +
                             "Please report this to the GitHub, alongside this log.\n" +
                             "============\n" + error
             };
@@ -161,9 +162,10 @@ public partial class MainWindow : Window
         if (ExtraParametersTextBox.Text != null)
             args += $" {ExtraParametersTextBox.Text}";
 
-        
-        RpcClient.SetPresence($"Playing in {SourceportComboBox.SelectedItem}", 
-            RpcClient.PlayingPresenceState(_externalFilePaths.ToArray(), (string)IWADComboBox.SelectedItem));
+        if (!_usePresetNameWithRPC)
+            RpcClient.SetPresence($"Playing in {SourceportComboBox.SelectedItem}", 
+                RpcClient.PlayingPresenceState(_externalFilePaths.ToArray(), (string)IWADComboBox.SelectedItem));
+        else RpcClient.SetPresence($"Playing in {SourceportComboBox.SelectedItem}", $"{IWADComboBox.SelectedItem} [{PresetsComboBox.SelectedItem}]");
 
         ProcessStartInfo startInfo = new()
         {
@@ -181,7 +183,7 @@ public partial class MainWindow : Window
             {
                 ErrorDialog errorDialog = new()
                 {
-                    ErrorText = process.StandardError.ReadToEnd()
+                    Message = process.StandardError.ReadToEnd()
                 };
                 errorDialog.ShowDialog(this);
             }
@@ -267,8 +269,8 @@ public partial class MainWindow : Window
     {
         Preset presetDialog = new Preset();
         presetDialog.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-        string? presetName = await presetDialog.ShowDialog<string?>(this);
-        if (presetName != null)
+        string[]? presetSettings = await presetDialog.ShowDialog<string[]?>(this);
+        if (presetSettings != null)
         {
             List<string> presetFile =
                 [(string)SourceportComboBox.SelectedItem, (string)IWADComboBox.SelectedItem, ExtraParametersTextBox.Text];
@@ -278,10 +280,11 @@ public partial class MainWindow : Window
                 files += $"{file},";
             files = files.TrimEnd(',');
             presetFile.Add(files);
+            presetFile.Add(presetSettings[1]);
             
-            File.WriteAllLines($"{Constants.MLX_PRESETS}/{presetName}.{Constants.MLX_PRESET_EXT}", presetFile);
+            File.WriteAllLines($"{Constants.MLX_PRESETS}/{presetSettings[0]}.{Constants.MLX_PRESET_EXT}", presetFile);
             RefreshPresetsComboBox();
-            PresetsComboBox.SelectedItem = presetName;
+            PresetsComboBox.SelectedItem = presetSettings[0];
         }
     }
     
@@ -290,42 +293,59 @@ public partial class MainWindow : Window
         if (PresetsComboBox.SelectedIndex != 0)
         {
             File.Delete($"{Constants.MLX_PRESETS}/{PresetsComboBox.SelectedItem}.{Constants.MLX_PRESET_EXT}");
-            PresetsComboBox.Items.RemoveAt(PresetsComboBox.SelectedIndex);
-            PresetsComboBox.SelectedIndex = 0; // Reset to "None."
+            RefreshPresetsComboBox();
         }
     }
 
     private void PresetsComboBox_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
-        // None selected.
-        if (PresetsComboBox.SelectedIndex == 0)
+        try // loading the preset.
         {
-            IWADComboBox.SelectedIndex = 0;
-            SourceportComboBox.SelectedIndex = 0;
-            ExtraParametersTextBox.Text = null;
-            _externalFilePaths.Clear();
-        }
-        else if (PresetsComboBox.SelectedIndex > 0)
-        {
-            string[] presetFile = 
-                File.ReadAllLines($"{Constants.MLX_PRESETS}/{PresetsComboBox.SelectedItem}.{Constants.MLX_PRESET_EXT}");
+            // "None" selected.
+            if (PresetsComboBox.SelectedIndex == 0)
+            {
+                IWADComboBox.SelectedIndex = 0;
+                SourceportComboBox.SelectedIndex = 0;
+                ExtraParametersTextBox.Text = null;
+                _externalFilePaths.Clear();
+                _usePresetNameWithRPC = false;
+            }
+            else if (PresetsComboBox.SelectedIndex > 0)
+            {
+                string[] presetFile = 
+                    File.ReadAllLines($"{Constants.MLX_PRESETS}/{PresetsComboBox.SelectedItem}.{Constants.MLX_PRESET_EXT}");
 
-            if (SourceportComboBox.Items.Contains(presetFile[0]))
-                SourceportComboBox.SelectedItem = presetFile[0];
-            else SourceportComboBox.SelectedIndex = 0;
+                if (SourceportComboBox.Items.Contains(presetFile[0]))
+                    SourceportComboBox.SelectedItem = presetFile[0];
+                else SourceportComboBox.SelectedIndex = 0;
             
-            if (IWADComboBox.Items.Contains(presetFile[1]))
-                IWADComboBox.SelectedItem = presetFile[1];
-            else IWADComboBox.SelectedIndex = 0;
+                if (IWADComboBox.Items.Contains(presetFile[1]))
+                    IWADComboBox.SelectedItem = presetFile[1];
+                else IWADComboBox.SelectedIndex = 0;
             
-            ExtraParametersTextBox.Text =  presetFile[2]; 
+                ExtraParametersTextBox.Text =  presetFile[2]; 
             
-            _externalFilePaths.Clear();
-            if (presetFile[3].Length > 0)
-                foreach (string file in presetFile[3].Split(','))
-                    _externalFilePaths.Add(file);
+                _externalFilePaths.Clear();
+                if (presetFile[3].Length > 0)
+                    foreach (string file in presetFile[3].Split(','))
+                        _externalFilePaths.Add(file);
+            
+                _usePresetNameWithRPC = bool.Parse(presetFile[4]);
+            }
+            RefreshExternalFilesListBox();
         }
-        RefreshExternalFilesListBox();
+        catch
+        {
+            ErrorDialog errorDialog = new ErrorDialog()
+            {
+                Message = "Preset file failed to be loaded completely.\n" +
+                          "Please delete the preset file.\n" +
+                          "Possible reasons could include the following:\n" +
+                          "   * Corrupted file data.\n" +
+                          "   * Using a preset from a previous version."
+            };
+            errorDialog.ShowDialog(this);
+        }
     }
     #endregion
     

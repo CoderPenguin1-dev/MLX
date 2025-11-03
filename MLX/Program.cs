@@ -17,6 +17,8 @@
 
 using Avalonia;
 using System;
+using System.IO;
+using System.Net;
 
 namespace MLX;
 
@@ -28,10 +30,17 @@ class Program
     [STAThread]
     public static void Main(string[] args)
     {
-        RpcClient.Initialize();
-        BuildAvaloniaApp()
-            .StartWithClassicDesktopLifetime(args);
-        RpcClient.Dispose();
+        try
+        {
+            RpcClient.Initialize();
+            BuildAvaloniaApp()
+                .StartWithClassicDesktopLifetime(args);
+            RpcClient.Dispose();
+        }
+        catch (Exception e)
+        {
+            File.WriteAllText("mlx.error.log", e.Message);
+        }
     }
 
     // Avalonia configuration, don't remove; also used by visual designer.

@@ -85,6 +85,20 @@ public partial class MainWindow : Window
         
         if (RpcClient.Initialized) // This is here literally just for the visual designer. Wow.
             RpcClient.SetPresence("Idle In Launcher", null);
+
+        // Show the error dialog if the previous instance had crashed.
+        if (File.Exists("mlx.error.log"))
+        {
+            string error = File.ReadAllText("mlx.error.log");
+            File.Delete("mlx.error.log");
+            ErrorDialog errorDialog = new ErrorDialog()
+            {
+                ErrorText = "This happened in your previous instance of MLX.\n" +
+                            "Please report this to the GitHub, alongside this log.\n" +
+                            "============\n" + error
+            };
+            errorDialog.ShowDialog(this);
+        }
     }
 
     private void LaunchButton_OnClick(object? sender, RoutedEventArgs e)

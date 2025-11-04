@@ -90,7 +90,8 @@ public partial class IWAD : Window
         if (IWADNameTextBox.Text != null && IWADPathTextBox.Text != null && IWADNameTextBox.Text.ToLower() != "none")
         {
             string[] IWADFile = [IWADPathTextBox.Text];
-            File.WriteAllLines($"{Constants.MLX_IWADS}/{IWADNameTextBox.Text}.{Constants.MLX_IWAD_EXT}", IWADFile);
+            string iwadName = StringKeyCode.ToKeyCode(IWADNameTextBox.Text);
+            File.WriteAllLines($"{Constants.MLX_IWADS}/{iwadName}.{Constants.MLX_IWAD_EXT}", IWADFile);
             Close(IWADNameTextBox.Text);
         }
     }

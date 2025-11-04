@@ -44,7 +44,10 @@ public partial class MainWindow : Window
         foreach (var item in Directory.GetFiles(path))
         {
             if (item.EndsWith(extension))
-                comboBox.Items.Add(Path.GetFileNameWithoutExtension(item));
+            {
+                string name = StringKeyCode.FromKeyCode(Path.GetFileNameWithoutExtension(item));
+                comboBox.Items.Add(name);
+            }
         }
         if (comboBox.Items.Contains(selectedItem))
             comboBox.SelectedItem = selectedItem;
@@ -270,6 +273,7 @@ public partial class MainWindow : Window
     {
         Preset presetDialog = new Preset();
         presetDialog.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+        
         string[]? presetSettings = await presetDialog.ShowDialog<string[]?>(this);
         if (presetSettings != null)
         {
@@ -282,8 +286,8 @@ public partial class MainWindow : Window
             files = files.TrimEnd(',');
             presetFile.Add(files);
             presetFile.Add(presetSettings[1]);
-            
-            File.WriteAllLines($"{Constants.MLX_PRESETS}/{presetSettings[0]}.{Constants.MLX_PRESET_EXT}", presetFile);
+            string presetName = StringKeyCode.ToKeyCode(presetSettings[0]);
+            File.WriteAllLines($"{Constants.MLX_PRESETS}/{presetName}.{Constants.MLX_PRESET_EXT}", presetFile);
             RefreshPresetsComboBox();
             PresetsComboBox.SelectedItem = presetSettings[0];
         }
@@ -293,7 +297,8 @@ public partial class MainWindow : Window
     {
         if (PresetsComboBox.SelectedIndex != 0)
         {
-            File.Delete($"{Constants.MLX_PRESETS}/{PresetsComboBox.SelectedItem}.{Constants.MLX_PRESET_EXT}");
+            string presetName = StringKeyCode.ToKeyCode((string)PresetsComboBox.SelectedItem);
+            File.Delete($"{Constants.MLX_PRESETS}/{presetName}.{Constants.MLX_PRESET_EXT}");
             RefreshPresetsComboBox();
         }
     }
@@ -313,8 +318,9 @@ public partial class MainWindow : Window
             }
             else if (PresetsComboBox.SelectedIndex > 0)
             {
+                string presetName = StringKeyCode.ToKeyCode((string)PresetsComboBox.SelectedItem);
                 string[] presetFile = 
-                    File.ReadAllLines($"{Constants.MLX_PRESETS}/{PresetsComboBox.SelectedItem}.{Constants.MLX_PRESET_EXT}");
+                    File.ReadAllLines($"{Constants.MLX_PRESETS}/{presetName}.{Constants.MLX_PRESET_EXT}");
 
                 if (SourceportComboBox.Items.Contains(presetFile[0]))
                     SourceportComboBox.SelectedItem = presetFile[0];
@@ -364,7 +370,8 @@ public partial class MainWindow : Window
     {
         if (SourceportComboBox.SelectedIndex != 0)
         {
-            File.Delete($"{Constants.MLX_PORTS}/{SourceportComboBox.SelectedItem}.{Constants.MLX_PORT_EXT}");
+            string portName = StringKeyCode.ToKeyCode((string)SourceportComboBox.SelectedItem);
+            File.Delete($"{Constants.MLX_PORTS}/{portName}.{Constants.MLX_PORT_EXT}");
             RefreshSourcePortsComboBox();
         }
     }
@@ -383,7 +390,8 @@ public partial class MainWindow : Window
     {
         if (IWADComboBox.SelectedIndex != 0)
         {
-            File.Delete($"{Constants.MLX_IWADS}/{IWADComboBox.SelectedItem}.{Constants.MLX_IWAD_EXT}");
+            string iwadName = StringKeyCode.ToKeyCode((string)IWADComboBox.SelectedItem);
+            File.Delete($"{Constants.MLX_IWADS}/{iwadName}.{Constants.MLX_IWAD_EXT}");
             IWADComboBox.Items.RemoveAt(IWADComboBox.SelectedIndex);
             IWADComboBox.SelectedIndex = 0; // Reset to "None."
         }

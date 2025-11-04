@@ -51,7 +51,8 @@ public partial class Sourceport : Window
         if (PortNameTextBox.Text != null && SourceportPathTextBox.Text != null && PortNameTextBox.Text.ToLower() != "none")
         {
             string[] portFile = [SourceportPathTextBox.Text, SourceportArgumentsTextBox.Text];
-            File.WriteAllLines($"{Constants.MLX_PORTS}/{PortNameTextBox.Text}.{Constants.MLX_PORT_EXT}", portFile);
+            string portName = StringKeyCode.ToKeyCode(PortNameTextBox.Text);
+            File.WriteAllLines($"{Constants.MLX_PORTS}/{portName}.{Constants.MLX_PORT_EXT}", portFile);
             Close(PortNameTextBox.Text);
         }
     }

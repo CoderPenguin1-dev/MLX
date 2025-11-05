@@ -47,7 +47,6 @@ internal static class StringKeyCode
     internal static string FromKeyCode(string str)
     {
         string[] characters = str.ToStringArray();
-        Console.WriteLine(characters.Length);
         for (int i = 0; i < characters.Length; i++)
         {
             if (characters[i] == "$")

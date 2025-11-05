@@ -25,7 +25,7 @@
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
         <PackageId>MLX</PackageId>
         <Product>MLX</Product>
-        <Version>1.2.1</Version>
+        <Version>1.2.2</Version>
         <Authors>CoderPenguin1</Authors>
         <Company>CoderPenguin1</Company>
         <ApplicationIcon>mlx.ico</ApplicationIcon>

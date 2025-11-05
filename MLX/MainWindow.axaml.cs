@@ -111,8 +111,9 @@ public partial class MainWindow : Window
         if (IWADComboBox.SelectedIndex == 0) return;
         if (SourceportComboBox.SelectedIndex == 0) return;
 
+        string portName = StringKeyCode.ToKeyCode((string)SourceportComboBox.SelectedItem);
         string[] portInfo =
-            File.ReadAllLines($"{Constants.MLX_PORTS}/{SourceportComboBox.SelectedItem}.{Constants.MLX_PORT_EXT}");
+            File.ReadAllLines($"{Constants.MLX_PORTS}/{portName}.{Constants.MLX_PORT_EXT}");
         string portPath = portInfo[0];
         string portArgs = portInfo[1];
         
@@ -121,8 +122,9 @@ public partial class MainWindow : Window
         if (portInfo.Length > 0) 
             args += $"{portArgs} ";
         
+        string iwadName =  StringKeyCode.ToKeyCode((string)IWADComboBox.SelectedItem);
         string iwadPath = 
-            File.ReadAllLines($"{Constants.MLX_IWADS}/{IWADComboBox.SelectedItem}.{Constants.MLX_IWAD_EXT}")[0];
+            File.ReadAllLines($"{Constants.MLX_IWADS}/{iwadName}.{Constants.MLX_IWAD_EXT}")[0];
         args += $"-iwad {iwadPath}";
         
         if (_externalFilePaths.Count > 0)

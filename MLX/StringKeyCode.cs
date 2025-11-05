@@ -79,6 +79,9 @@ internal static class StringKeyCode
                     case "7":
                         character = "\\";
                         break;
+                    case "8":
+                        character = "|";
+                        break;
                 }
                 characters[i] = character;
                 characters[i + 1] = "";
@@ -122,6 +125,9 @@ internal static class StringKeyCode
                     break;
                 case "\\":
                     characters[i] = "$7";
+                    break;
+                case "|":
+                    characters[i] = "$8";
                     break;
             }
         }

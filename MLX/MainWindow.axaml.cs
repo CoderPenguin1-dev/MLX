@@ -73,19 +73,19 @@ public partial class MainWindow : Window
     
     private void InitializeLauncher(object? sender, RoutedEventArgs e)
     {
-        if (Directory.Exists(Constants.MLX_PATH))
-        {
-            RefreshPresetsComboBox();
-            RefreshSourcePortsComboBox();
-            RefreshIWADsComboBox();
-        }
-        else
+        // Create the data folder.
+        if (!Directory.Exists(Constants.MLX_PATH))
         {
             Directory.CreateDirectory(Constants.MLX_PATH);
             Directory.CreateDirectory(Constants.MLX_IWADS);
             Directory.CreateDirectory(Constants.MLX_PRESETS);
             Directory.CreateDirectory(Constants.MLX_PORTS);
         }
+        
+        // Refresh all combo boxes.
+        RefreshPresetsComboBox();
+        RefreshSourcePortsComboBox();
+        RefreshIWADsComboBox();
         
         if (RpcClient.Initialized) // This is here literally just for the visual designer. Wow.
             RpcClient.SetPresence("Idle In Launcher", null);
@@ -125,7 +125,7 @@ public partial class MainWindow : Window
         string iwadName =  StringKeyCode.ToKeyCode((string)IWADComboBox.SelectedItem);
         string iwadPath = 
             File.ReadAllLines($"{Constants.MLX_IWADS}/{iwadName}.{Constants.MLX_IWAD_EXT}")[0];
-        args += $"-iwad {iwadPath}";
+        args += $"-iwad \"{iwadPath}\"";
         
         if (_externalFilePaths.Count > 0)
         {

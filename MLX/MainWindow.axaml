@@ -58,7 +58,7 @@
                         
                         <Label Grid.Row="3">Presets</Label>
                         <Grid Grid.Row="4" ColumnDefinitions="*, Auto, Auto" ColumnSpacing="15">
-                                <ComboBox Name="PresetsComboBox" HorizontalAlignment="Stretch" SelectionChanged="PresetsComboBox_OnSelectionChanged"></ComboBox>
+                                <ComboBox Name="PresetsComboBox" HorizontalAlignment="Stretch" SelectionChanged="PresetsComboBox_OnSelectionChanged">None</ComboBox>
                                 <Button Name="AddPresetButton" Grid.Column="1" Click="AddPresetButton_OnClick">+</Button>
                                 <Button Name="RemovePresetButton" Grid.Column="2" Click="RemovePresetButton_OnClick">-</Button>
                         </Grid>

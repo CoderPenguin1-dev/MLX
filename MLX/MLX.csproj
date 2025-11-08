@@ -46,11 +46,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Update="Preset.axaml.cs">
+      <Compile Update="AddPresetDialog.axaml.cs">
         <DependentUpon>Preset.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-      <Compile Update="IWAD.axaml.cs">
+      <Compile Update="AddGameDialog.axaml.cs">
         <DependentUpon>IWAD.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>

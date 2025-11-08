@@ -28,7 +28,7 @@ namespace MLX;
 public partial class MainWindow : Window
 {
     private List<string> _externalFilePaths = [];
-    private bool _usePresetNameWithRPC = false;
+    private bool _usePresetNameWithRpc = false;
     public MainWindow()
     {
         InitializeComponent();
@@ -36,32 +36,14 @@ public partial class MainWindow : Window
 
 
     #region Refresh Boxes
-    private void RefreshComboBox(ref ComboBox comboBox, string path, string extension)
-    {
-        string selectedItem = (string)comboBox.SelectedItem;
-        comboBox.Items.Clear();
-        comboBox.Items.Add("None");
-        foreach (var item in Directory.GetFiles(path))
-        {
-            if (item.EndsWith(extension))
-            {
-                string name = StringKeyCode.FromKeyCode(Path.GetFileNameWithoutExtension(item));
-                comboBox.Items.Add(name);
-            }
-        }
-        if (comboBox.Items.Contains(selectedItem))
-            comboBox.SelectedItem = selectedItem;
-        else comboBox.SelectedIndex = 0;
-    }
-    
     private void RefreshPresetsComboBox() =>
-        RefreshComboBox(ref PresetsComboBox, Constants.MLX_PRESETS, Constants.MLX_PRESET_EXT);
+        GenericFunctions.RefreshComboBox(ref PresetsComboBox, Constants.PresetsFolder, Constants.PresetExtension);
     
     private void RefreshSourcePortsComboBox() =>
-        RefreshComboBox(ref SourceportComboBox, Constants.MLX_PORTS, Constants.MLX_PORT_EXT);
+        GenericFunctions.RefreshComboBox(ref SourceportComboBox, Constants.PortsFolder, Constants.PortExtension);
 
-    private void RefreshIWADsComboBox() =>
-        RefreshComboBox(ref IWADComboBox, Constants.MLX_IWADS, Constants.MLX_IWAD_EXT);
+    private void RefreshGamesComboBox() =>
+        GenericFunctions.RefreshComboBox(ref GameComboBox, Constants.GamesFolder, Constants.GameExtension);
 
     private void RefreshExternalFilesListBox()
     {
@@ -74,18 +56,18 @@ public partial class MainWindow : Window
     private void InitializeLauncher(object? sender, RoutedEventArgs e)
     {
         // Create the data folder.
-        if (!Directory.Exists(Constants.MLX_PATH))
+        if (!Directory.Exists(Constants.DataFolder))
         {
-            Directory.CreateDirectory(Constants.MLX_PATH);
-            Directory.CreateDirectory(Constants.MLX_IWADS);
-            Directory.CreateDirectory(Constants.MLX_PRESETS);
-            Directory.CreateDirectory(Constants.MLX_PORTS);
+            Directory.CreateDirectory(Constants.DataFolder);
+            Directory.CreateDirectory(Constants.GamesFolder);
+            Directory.CreateDirectory(Constants.PresetsFolder);
+            Directory.CreateDirectory(Constants.PortsFolder);
         }
         
         // Refresh all combo boxes.
         RefreshPresetsComboBox();
         RefreshSourcePortsComboBox();
-        RefreshIWADsComboBox();
+        RefreshGamesComboBox();
         
         if (RpcClient.Initialized) // This is here literally just for the visual designer. Wow.
             RpcClient.SetPresence("Idle In Launcher", null);
@@ -108,12 +90,12 @@ public partial class MainWindow : Window
     private void LaunchButton_OnClick(object? sender, RoutedEventArgs e)
     {
         // Make sure either of these are actually selected.
-        if (IWADComboBox.SelectedIndex == 0) return;
+        if (GameComboBox.SelectedIndex == 0) return;
         if (SourceportComboBox.SelectedIndex == 0) return;
 
         string portName = StringKeyCode.ToKeyCode((string)SourceportComboBox.SelectedItem);
         string[] portInfo =
-            File.ReadAllLines($"{Constants.MLX_PORTS}/{portName}.{Constants.MLX_PORT_EXT}");
+            File.ReadAllLines($"{Constants.PortsFolder}/{portName}.{Constants.PortExtension}");
         string portPath = portInfo[0];
         string portArgs = portInfo[1];
         
@@ -122,10 +104,10 @@ public partial class MainWindow : Window
         if (portInfo.Length > 0) 
             args += $"{portArgs} ";
         
-        string iwadName =  StringKeyCode.ToKeyCode((string)IWADComboBox.SelectedItem);
-        string iwadPath = 
-            File.ReadAllLines($"{Constants.MLX_IWADS}/{iwadName}.{Constants.MLX_IWAD_EXT}")[0];
-        args += $"-iwad \"{iwadPath}\"";
+        string GameName =  StringKeyCode.ToKeyCode((string)GameComboBox.SelectedItem);
+        string GamePath = 
+            File.ReadAllLines($"{Constants.GamesFolder}/{GameName}.{Constants.GameExtension}")[0];
+        args += $"-iwad \"{GamePath}\"";
         
         if (_externalFilePaths.Count > 0)
         {
@@ -169,8 +151,8 @@ public partial class MainWindow : Window
 
         string details = $"Playing in {SourceportComboBox.SelectedItem}";
         string state;
-        if (_usePresetNameWithRPC) state = $"{IWADComboBox.SelectedItem} [{PresetsComboBox.SelectedItem}]";
-        else state = RpcClient.PlayingPresenceState(_externalFilePaths.ToArray(), (string) IWADComboBox.SelectedItem);
+        if (_usePresetNameWithRpc) state = $"{GameComboBox.SelectedItem} [{PresetsComboBox.SelectedItem}]";
+        else state = RpcClient.PlayingPresenceState(_externalFilePaths.ToArray(), (string) GameComboBox.SelectedItem);
         RpcClient.SetPresence(details, state);
         
         ProcessStartInfo startInfo = new()
@@ -262,7 +244,7 @@ public partial class MainWindow : Window
         }
     }
 
-    private void ClearButton_OnClick(object? sender, RoutedEventArgs e)
+    private void ClearFilesButton_OnClick(object? sender, RoutedEventArgs e)
     {
         _externalFilePaths.Clear();
         ExternalFilesListBox.Items.Clear();
@@ -273,14 +255,14 @@ public partial class MainWindow : Window
     #region Presets
     private async void AddPresetButton_OnClick(object? sender, RoutedEventArgs e)
     {
-        Preset presetDialog = new Preset();
+        AddPresetDialog presetDialog = new AddPresetDialog();
         presetDialog.WindowStartupLocation = WindowStartupLocation.CenterOwner;
         
         string[]? presetSettings = await presetDialog.ShowDialog<string[]?>(this);
         if (presetSettings != null)
         {
             List<string> presetFile =
-                [(string)SourceportComboBox.SelectedItem, (string)IWADComboBox.SelectedItem, ExtraParametersTextBox.Text];
+                [(string)SourceportComboBox.SelectedItem, (string)GameComboBox.SelectedItem, ExtraParametersTextBox.Text];
 
             string files = "";
             foreach (string file in _externalFilePaths)
@@ -289,21 +271,15 @@ public partial class MainWindow : Window
             presetFile.Add(files);
             presetFile.Add(presetSettings[1]);
             string presetName = StringKeyCode.ToKeyCode(presetSettings[0]);
-            File.WriteAllLines($"{Constants.MLX_PRESETS}/{presetName}.{Constants.MLX_PRESET_EXT}", presetFile);
+            File.WriteAllLines($"{Constants.PresetsFolder}/{presetName}.{Constants.PresetExtension}", presetFile);
             RefreshPresetsComboBox();
             PresetsComboBox.SelectedItem = presetSettings[0];
         }
     }
     
-    private void RemovePresetButton_OnClick(object? sender, RoutedEventArgs e)
-    {
-        if (PresetsComboBox.SelectedIndex != 0)
-        {
-            string presetName = StringKeyCode.ToKeyCode((string)PresetsComboBox.SelectedItem);
-            File.Delete($"{Constants.MLX_PRESETS}/{presetName}.{Constants.MLX_PRESET_EXT}");
-            RefreshPresetsComboBox();
-        }
-    }
+    private void RemovePresetButton_OnClick(object? sender, RoutedEventArgs e) =>
+        GenericFunctions.RemoveSelectedItemFromComboBox
+            (ref PresetsComboBox, Constants.PresetsFolder, Constants.PresetExtension, RefreshPresetsComboBox);
 
     private void PresetsComboBox_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
@@ -312,25 +288,25 @@ public partial class MainWindow : Window
             // "None" selected.
             if (PresetsComboBox.SelectedIndex == 0)
             {
-                IWADComboBox.SelectedIndex = 0;
+                GameComboBox.SelectedIndex = 0;
                 SourceportComboBox.SelectedIndex = 0;
                 ExtraParametersTextBox.Text = null;
                 _externalFilePaths.Clear();
-                _usePresetNameWithRPC = false;
+                _usePresetNameWithRpc = false;
             }
             else if (PresetsComboBox.SelectedIndex > 0)
             {
                 string presetName = StringKeyCode.ToKeyCode((string)PresetsComboBox.SelectedItem);
                 string[] presetFile = 
-                    File.ReadAllLines($"{Constants.MLX_PRESETS}/{presetName}.{Constants.MLX_PRESET_EXT}");
+                    File.ReadAllLines($"{Constants.PresetsFolder}/{presetName}.{Constants.PresetExtension}");
 
                 if (SourceportComboBox.Items.Contains(presetFile[0]))
                     SourceportComboBox.SelectedItem = presetFile[0];
                 else SourceportComboBox.SelectedIndex = 0;
             
-                if (IWADComboBox.Items.Contains(presetFile[1]))
-                    IWADComboBox.SelectedItem = presetFile[1];
-                else IWADComboBox.SelectedIndex = 0;
+                if (GameComboBox.Items.Contains(presetFile[1]))
+                    GameComboBox.SelectedItem = presetFile[1];
+                else GameComboBox.SelectedIndex = 0;
             
                 ExtraParametersTextBox.Text =  presetFile[2]; 
             
@@ -339,7 +315,7 @@ public partial class MainWindow : Window
                     foreach (string file in presetFile[3].Split(','))
                         _externalFilePaths.Add(file);
             
-                _usePresetNameWithRPC = bool.Parse(presetFile[4]);
+                _usePresetNameWithRpc = bool.Parse(presetFile[4]);
             }
         }
         catch
@@ -360,42 +336,29 @@ public partial class MainWindow : Window
     
     private async void AddSourcePortButton_OnClick(object? sender, RoutedEventArgs e)
     {
-        var portWindow = new Sourceport();
-        portWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-        string? portName = await portWindow.ShowDialog<string?>(this);
+        var portDialog = new AddSourceportDialog();
+        portDialog.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+        string? portName = await portDialog.ShowDialog<string?>(this);
         RefreshSourcePortsComboBox();
         if (portName != null)
             SourceportComboBox.SelectedItem = portName;
     }
 
-    private void RemoveSourcePortButton_OnClick(object? sender, RoutedEventArgs e)
+    private void RemoveSourcePortButton_OnClick(object? sender, RoutedEventArgs e) =>
+        GenericFunctions.RemoveSelectedItemFromComboBox
+            (ref SourceportComboBox, Constants.PortsFolder, Constants.PortExtension, RefreshSourcePortsComboBox);
+
+    private async void AddGameButton_OnClick(object? sender, RoutedEventArgs e)
     {
-        if (SourceportComboBox.SelectedIndex != 0)
-        {
-            string portName = StringKeyCode.ToKeyCode((string)SourceportComboBox.SelectedItem);
-            File.Delete($"{Constants.MLX_PORTS}/{portName}.{Constants.MLX_PORT_EXT}");
-            RefreshSourcePortsComboBox();
-        }
+        var gameDialog = new AddGameDialog();
+        gameDialog.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+        string? gameName = await gameDialog.ShowDialog<string?>(this);
+        RefreshGamesComboBox();
+        if (gameName != null)
+            GameComboBox.SelectedItem = gameName;
     }
 
-    private async void AddIWADButton_OnClick(object? sender, RoutedEventArgs e)
-    {
-        var iwadWindow = new IWAD();
-        iwadWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-        string? iwadName = await iwadWindow.ShowDialog<string?>(this);
-        RefreshIWADsComboBox();
-        if (iwadName != null)
-            IWADComboBox.SelectedItem = iwadName;
-    }
-
-    private void RemoveIWADButton_OnClick(object? sender, RoutedEventArgs e)
-    {
-        if (IWADComboBox.SelectedIndex != 0)
-        {
-            string iwadName = StringKeyCode.ToKeyCode((string)IWADComboBox.SelectedItem);
-            File.Delete($"{Constants.MLX_IWADS}/{iwadName}.{Constants.MLX_IWAD_EXT}");
-            IWADComboBox.Items.RemoveAt(IWADComboBox.SelectedIndex);
-            IWADComboBox.SelectedIndex = 0; // Reset to "None."
-        }
-    }
+    private void RemoveGameButton_OnClick(object? sender, RoutedEventArgs e) =>
+        GenericFunctions.RemoveSelectedItemFromComboBox
+            (ref GameComboBox, Constants.GamesFolder, Constants.GameExtension, RefreshGamesComboBox);
 }

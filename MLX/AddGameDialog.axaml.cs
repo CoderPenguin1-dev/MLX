@@ -28,11 +28,11 @@ using System.Security.Cryptography;
 
 namespace MLX;
 
-public partial class IWAD : Window
+public partial class AddGameDialog : Window
 {
-    // The names of known, non-updated games.
-    // Freedoom is not included due to constantly changing hashes.
-    // Hashes are from doomwiki.org or hashed myself.
+    /// <summary>
+    /// Contains the names of known games.
+    /// </summary>
     private readonly string[] _gameNames =
     [
         "The Ultimate Doom", "DOOM Shareware", "Doom II: Hell On Earth", 
@@ -40,7 +40,11 @@ public partial class IWAD : Window
         "Chex Quest 3: Vanilla", "Chex Quest 3", "Hexen: Beyond Heretic",
         "Heretic"
     ];
-    private readonly string[] _gameMD5 =
+    
+    /// <summary>
+    /// Contains the MD5 hashes of each game.
+    /// </summary>
+    private readonly string[] _gameHashes =
     [
         "c4fe9fd920207691a9f493668e0a2083", "f0cefca49926d00903cf57551d901abe", "25e1459ca71d321525f84628f45ca8cd",
         "4e158d9953c79ccf97bd0663244cc6b6", "75c8cf89566741fa9d22447604053bd7", "25485721882b050afa96a56e5758dd52",
@@ -48,14 +52,19 @@ public partial class IWAD : Window
         "66d686b1ed6d35ff103f15dbd30e0341"
     ];
 
-    private string GetMD5(string path)
+    /// <summary>
+    /// Calculates the MD5 hash of a file.
+    /// </summary>
+    /// <param name="path">The path of the file.</param>
+    /// <returns>The MD5 hash as a string.</returns>
+    private static string GetHash(string path)
     {
         var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
         byte[] hash = MD5.Create().ComputeHash(stream);
         return BitConverter.ToString(hash).Replace("-", "").ToLower();
     }
     
-    public IWAD()
+    public AddGameDialog()
     {
         InitializeComponent();
     }
@@ -72,11 +81,11 @@ public partial class IWAD : Window
         if (files?.Count > 0)
         {
             IWADPathTextBox.Text = files[0].TryGetLocalPath();
-            string md5 = GetMD5(files[0].TryGetLocalPath());
+            string md5 = GetHash(files[0].TryGetLocalPath());
             Console.WriteLine(md5);
             for (int i = 0; i < _gameNames.Length; i++)
             {
-                if (_gameMD5[i].Equals(md5, StringComparison.CurrentCultureIgnoreCase))
+                if (_gameHashes[i].Equals(md5, StringComparison.CurrentCultureIgnoreCase))
                 {
                     IWADNameTextBox.Text = _gameNames[i];
                     break;
@@ -91,7 +100,7 @@ public partial class IWAD : Window
         {
             string[] IWADFile = [IWADPathTextBox.Text];
             string iwadName = StringKeyCode.ToKeyCode(IWADNameTextBox.Text);
-            File.WriteAllLines($"{Constants.MLX_IWADS}/{iwadName}.{Constants.MLX_IWAD_EXT}", IWADFile);
+            File.WriteAllLines($"{Constants.GamesFolder}/{iwadName}.{Constants.GameExtension}", IWADFile);
             Close(IWADNameTextBox.Text);
         }
     }

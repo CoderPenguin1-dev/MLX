@@ -20,13 +20,13 @@ namespace MLX;
 internal static class Constants
 {
     // Paths
-    internal const string MLX_PATH = "MLX_Data";
-    internal const string MLX_PORTS = $"{MLX_PATH}/Sourceports";
-    internal const string MLX_IWADS = $"{MLX_PATH}/IWADs";
-    internal const string MLX_PRESETS = $"{MLX_PATH}/Presets";
+    internal const string DataFolder = "MLX_Data";
+    internal const string PortsFolder = $"{DataFolder}/Sourceports";
+    internal const string GamesFolder = $"{DataFolder}/IWADs";
+    internal const string PresetsFolder = $"{DataFolder}/Presets";
     
     // File Extensions
-    internal const string MLX_PORT_EXT = "mlx_port";
-    internal const string MLX_PRESET_EXT = "mlx_preset";
-    internal const string MLX_IWAD_EXT = "mlx_iwad";
+    internal const string PortExtension = "mlx_port";
+    internal const string PresetExtension = "mlx_preset";
+    internal const string GameExtension = "mlx_iwad";
 }

@@ -26,9 +26,9 @@ using Avalonia.Platform.Storage;
 
 namespace MLX;
 
-public partial class Sourceport : Window
+public partial class AddSourceportDialog : Window
 {
-    public Sourceport()
+    public AddSourceportDialog()
     {
         InitializeComponent();
     }
@@ -52,7 +52,7 @@ public partial class Sourceport : Window
         {
             string[] portFile = [SourceportPathTextBox.Text, SourceportArgumentsTextBox.Text];
             string portName = StringKeyCode.ToKeyCode(PortNameTextBox.Text);
-            File.WriteAllLines($"{Constants.MLX_PORTS}/{portName}.{Constants.MLX_PORT_EXT}", portFile);
+            File.WriteAllLines($"{Constants.PortsFolder}/{portName}.{Constants.PortExtension}", portFile);
             Close(PortNameTextBox.Text);
         }
     }

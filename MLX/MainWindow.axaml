@@ -30,9 +30,9 @@
                 <Grid RowDefinitions="Auto, Auto, Auto, *, Auto, Auto, Auto" RowSpacing="15">
                         <Label Grid.Row="0">Game</Label>
                         <Grid Grid.Row="1" ColumnDefinitions="*, Auto, Auto" ColumnSpacing="15">
-                                <ComboBox Name="IWADComboBox" Grid.Column="0" HorizontalAlignment="Stretch" SelectedIndex="0">None</ComboBox>
-                                <Button Name="AddIWADButton" Grid.Column="1" VerticalAlignment="Top" Click="AddIWADButton_OnClick">+</Button>
-                                <Button Name="RemoveIWADButton" Grid.Column="2" VerticalAlignment="Top" Click="RemoveIWADButton_OnClick">-</Button>
+                                <ComboBox Name="GameComboBox" Grid.Column="0" HorizontalAlignment="Stretch" SelectedIndex="0">None</ComboBox>
+                                <Button Name="AddGameButton" Grid.Column="1" VerticalAlignment="Top" Click="AddGameButton_OnClick">+</Button>
+                                <Button Name="RemoveGameButton" Grid.Column="2" VerticalAlignment="Top" Click="RemoveGameButton_OnClick">-</Button>
                         </Grid>
                         <Label Grid.Row="2">Source Port</Label>
                         <Grid Grid.Row="3" ColumnDefinitions="*, Auto, Auto" ColumnSpacing="15">
@@ -51,7 +51,7 @@
                         <Grid Grid.Row="2" ColumnDefinitions="Auto, *, Auto, *, Auto" ColumnSpacing="10">
                                 <Button Name="AddFileButton" HorizontalAlignment="Left" Click="AddFileButton_OnClick">+</Button>
                                 <Button Name="RemoveFileButton" Grid.Column="1" HorizontalAlignment="Left" Click="RemoveFileButton_OnClick">-</Button>
-                                <Button Name="ClearButton" Grid.Column="2" Click="ClearButton_OnClick">Clear List</Button>
+                                <Button Name="ClearFilesButton" Grid.Column="2" Click="ClearFilesButton_OnClick">Clear List</Button>
                                 <Button Name="ReorderFileUpButton" Grid.Column="3" HorizontalAlignment="Right" Click="ReorderFileUpButton_OnClick">Up</Button>
                                 <Button Name="ReorderFileDownButton" Grid.Column="4" HorizontalAlignment="Right" Click="ReorderFileDownButton_OnClick">Down</Button>
                         </Grid>

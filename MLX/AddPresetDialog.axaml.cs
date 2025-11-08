@@ -25,9 +25,9 @@ using Avalonia.Platform.Storage;
 
 namespace MLX;
 
-public partial class Preset : Window
+public partial class AddPresetDialog : Window
 {
-    public Preset()
+    public AddPresetDialog()
     {
         InitializeComponent();
     }

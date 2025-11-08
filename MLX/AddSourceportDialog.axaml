@@ -22,7 +22,7 @@
         mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="350"
         Width="450" Height="350"
         CanResize="False"
-        x:Class="MLX.Sourceport"
+        x:Class="MLX.AddSourceportDialog"
         Title="Add Source Port">
         
         <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto" RowSpacing="15" Margin="30">

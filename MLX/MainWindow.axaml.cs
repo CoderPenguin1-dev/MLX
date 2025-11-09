@@ -104,10 +104,10 @@ public partial class MainWindow : Window
         if (portInfo.Length > 0) 
             args += $"{portArgs} ";
         
-        string GameName =  StringKeyCode.ToKeyCode((string)GameComboBox.SelectedItem);
-        string GamePath = 
-            File.ReadAllLines($"{Constants.GamesFolder}/{GameName}.{Constants.GameExtension}")[0];
-        args += $"-iwad \"{GamePath}\"";
+        string gameName =  StringKeyCode.ToKeyCode((string)GameComboBox.SelectedItem);
+        string gamePath = 
+            File.ReadAllLines($"{Constants.GamesFolder}/{gameName}.{Constants.GameExtension}")[0];
+        args += $"-iwad \"{gamePath}\"";
         
         if (_externalFilePaths.Count > 0)
         {

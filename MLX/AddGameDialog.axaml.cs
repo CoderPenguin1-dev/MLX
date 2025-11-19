@@ -61,7 +61,7 @@ public partial class AddGameDialog : Window
     {
         var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
         byte[] hash = MD5.Create().ComputeHash(stream);
-        return BitConverter.ToString(hash).Replace("-", "").ToLower();
+        return Convert.ToHexStringLower(hash);
     }
     
     public AddGameDialog()
@@ -69,7 +69,7 @@ public partial class AddGameDialog : Window
         InitializeComponent();
     }
 
-    private async void OpenIWADSelector()
+    private async void OpenGamePathSelector()
     {
         FilePickerOpenOptions options = new()
         {
@@ -80,33 +80,33 @@ public partial class AddGameDialog : Window
         var files = await StorageProvider.OpenFilePickerAsync(options);
         if (files?.Count > 0)
         {
-            IWADPathTextBox.Text = files[0].TryGetLocalPath();
+            GamePathTextBox.Text = files[0].TryGetLocalPath();
             string md5 = GetHash(files[0].TryGetLocalPath());
             Console.WriteLine(md5);
             for (int i = 0; i < _gameNames.Length; i++)
             {
                 if (_gameHashes[i].Equals(md5, StringComparison.CurrentCultureIgnoreCase))
                 {
-                    IWADNameTextBox.Text = _gameNames[i];
+                    GameNameTextBox.Text = _gameNames[i];
                     break;
                 }
             }
         }
     }
 
-    private void SaveIWADButton_OnClick(object? sender, RoutedEventArgs e)
+    private void SaveGameButton_OnClick(object? sender, RoutedEventArgs e)
     {
-        if (IWADNameTextBox.Text != null && IWADPathTextBox.Text != null && IWADNameTextBox.Text.ToLower() != "none")
+        if (GameNameTextBox.Text != null && GamePathTextBox.Text != null && GameNameTextBox.Text.ToLower() != "none")
         {
-            string[] IWADFile = [IWADPathTextBox.Text];
-            string iwadName = StringKeyCode.ToKeyCode(IWADNameTextBox.Text);
-            File.WriteAllLines($"{Constants.GamesFolder}/{iwadName}.{Constants.GameExtension}", IWADFile);
-            Close(IWADNameTextBox.Text);
+            string[] gameFile = [GamePathTextBox.Text];
+            string gameName = StringKeyCode.ToKeyCode(GameNameTextBox.Text);
+            File.WriteAllLines($"{Constants.GamesFolder}/{gameName}.{Constants.GameExtension}", gameFile);
+            Close(GameNameTextBox.Text);
         }
     }
 
-    private void IWADPathButton_OnClick(object? sender, RoutedEventArgs e)
+    private void GamePathButton_OnClick(object? sender, RoutedEventArgs e)
     {
-        OpenIWADSelector();
+        OpenGamePathSelector();
     }
 }

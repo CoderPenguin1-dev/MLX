@@ -27,13 +27,13 @@
         
         <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto" RowSpacing="15" Margin="30">
                 <Label Grid.Row="0" HorizontalAlignment="Center">Game Name</Label>
-                <TextBox Name="IWADNameTextBox" Grid.Row="1" HorizontalAlignment="Stretch"></TextBox>
+                <TextBox Name="GameNameTextBox" Grid.Row="1" HorizontalAlignment="Stretch"></TextBox>
                 
                 <Label Grid.Row="2" HorizontalAlignment="Center">Game File Path</Label>
                 <Grid Grid.Row="3" ColumnDefinitions="*, Auto" ColumnSpacing="15">
-                        <TextBox Name="IWADPathTextBox"></TextBox>
-                        <Button Grid.Column="1" Name="IWADPathButton" Click="IWADPathButton_OnClick">...</Button>
+                        <TextBox Name="GamePathTextBox"></TextBox>
+                        <Button Grid.Column="1" Name="GamePathButton" Click="GamePathButton_OnClick">...</Button>
                 </Grid>
-                <Button Name="SaveIWADButton" Grid.Row="6" HorizontalAlignment="Center" Click="SaveIWADButton_OnClick">Add Game</Button>
+                <Button Name="SaveGameButton" Grid.Row="6" HorizontalAlignment="Center" Click="SaveGameButton_OnClick">Add Game</Button>
         </Grid>
 </Window>

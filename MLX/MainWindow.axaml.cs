@@ -77,13 +77,11 @@ public partial class MainWindow : Window
         {
             string error = File.ReadAllText("mlx.error.log");
             File.Delete("mlx.error.log");
-            ErrorDialog errorDialog = new ErrorDialog()
-            {
-                Message = "This happened in your previous instance of MLX.\n" +
-                            "Please report this to the GitHub, alongside this log.\n" +
-                            "============\n" + error
-            };
-            errorDialog.ShowDialog(this);
+            string message =
+                "This happened in your previous instance of MLX.\n" +
+                "Please report this to the GitHub, alongside this log.\n" +
+                "============\n" + error;
+            new ErrorDialog().ShowErrorDialog(this, message);
         }
     }
 
@@ -169,11 +167,8 @@ public partial class MainWindow : Window
             // Show the error dialog if an error was detected.
             if (process.ExitCode != 0)
             {
-                ErrorDialog errorDialog = new()
-                {
-                    Message = process.StandardError.ReadToEnd()
-                };
-                errorDialog.ShowDialog(this);
+                new ErrorDialog().ShowErrorDialog(this, 
+                    process.StandardError.ReadToEnd());
             }
         }
         
@@ -320,15 +315,13 @@ public partial class MainWindow : Window
         }
         catch
         {
-            ErrorDialog errorDialog = new ErrorDialog()
-            {
-                Message = "Preset file failed to be loaded completely.\n" +
-                          "Please delete the preset file.\n" +
-                          "Possible reasons could include the following:\n" +
-                          "   * Corrupted file data.\n" +
-                          "   * Using a preset from a previous version."
-            };
-            errorDialog.ShowDialog(this);
+            string message =
+                "Preset file failed to be loaded completely.\n" +
+                "Please delete the preset file.\n" +
+                "Possible reasons could include the following:\n" +
+                "   * Corrupted file data.\n" +
+                "   * Using a preset from a previous version.";
+            new ErrorDialog().ShowErrorDialog(this, message);
         }
         RefreshExternalFilesListBox();
     }
@@ -336,7 +329,10 @@ public partial class MainWindow : Window
     
     private async void AddSourcePortButton_OnClick(object? sender, RoutedEventArgs e)
     {
-        var portDialog = new AddSourceportDialog();
+        var portDialog = new AddSourceportDialog()
+        {
+            WindowStartupLocation = WindowStartupLocation.CenterOwner,
+        };
         portDialog.WindowStartupLocation = WindowStartupLocation.CenterOwner;
         string? portName = await portDialog.ShowDialog<string?>(this);
         RefreshSourcePortsComboBox();
@@ -350,8 +346,10 @@ public partial class MainWindow : Window
 
     private async void AddGameButton_OnClick(object? sender, RoutedEventArgs e)
     {
-        var gameDialog = new AddGameDialog();
-        gameDialog.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+        var gameDialog = new AddGameDialog()
+        {
+            WindowStartupLocation = WindowStartupLocation.CenterOwner
+        };
         string? gameName = await gameDialog.ShowDialog<string?>(this);
         RefreshGamesComboBox();
         if (gameName != null)

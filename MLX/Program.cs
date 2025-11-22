@@ -18,7 +18,6 @@
 using Avalonia;
 using System;
 using System.IO;
-using System.Net;
 
 namespace MLX;
 

@@ -56,6 +56,10 @@ public partial class MainWindow : Window
     
     private void InitializeLauncher(object? sender, RoutedEventArgs e)
     {
+        Title = $"MLX v" +
+                $"{GetType().Assembly.GetName().Version.Major}." +
+                $"{GetType().Assembly.GetName().Version.Minor}." +
+                $"{GetType().Assembly.GetName().Version.Build}";
         // Create the data folder.
         if (!Directory.Exists(Constants.DataFolder))
         {

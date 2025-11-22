@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 
@@ -359,4 +360,23 @@ public partial class MainWindow : Window
     private void RemoveGameButton_OnClick(object? sender, RoutedEventArgs e) =>
         GenericFunctions.RemoveSelectedItemFromComboBox
             (ref GameComboBox, Constants.GamesFolder, Constants.GameExtension, RefreshGamesComboBox);
+
+    private async void ExtraParametersTextBox_OnKeyDown(object? sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.Enter)
+        {
+            FilePickerOpenOptions options = new()
+            {
+                Title = "Select file",
+                FileTypeFilter = 
+                [FileFilters.DoomModFiles, FileFilters.WAD, FileFilters.PK3, 
+                    FileFilters.PK7, FileFilters.PKE, FileFilters.DEH,
+                    FileFilters.BEX, FileFilters.All]
+            };
+
+            var files = await StorageProvider.OpenFilePickerAsync(options);
+            if (files.Count > 0)
+                ExtraParametersTextBox.Text += $"\"{files[0].TryGetLocalPath()}\"";
+        }
+    }
 }

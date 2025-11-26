@@ -52,8 +52,8 @@
                                 <Button Name="AddFileButton" HorizontalAlignment="Left" Click="AddFileButton_OnClick">+</Button>
                                 <Button Name="RemoveFileButton" Grid.Column="1" HorizontalAlignment="Left" Click="RemoveFileButton_OnClick">-</Button>
                                 <Button Name="ClearFilesButton" Grid.Column="2" Click="ClearFilesButton_OnClick">Clear List</Button>
-                                <Button Name="ReorderFileUpButton" Grid.Column="3" HorizontalAlignment="Right" Click="ReorderFileUpButton_OnClick">Up</Button>
-                                <Button Name="ReorderFileDownButton" Grid.Column="4" HorizontalAlignment="Right" Click="ReorderFileDownButton_OnClick">Down</Button>
+                                <Button Name="ReorderFileUpButton" Grid.Column="3" HorizontalAlignment="Right" Click="ReorderFileUpButton_OnClick">↑</Button>
+                                <Button Name="ReorderFileDownButton" Grid.Column="4" HorizontalAlignment="Right" Click="ReorderFileDownButton_OnClick">↓</Button>
                         </Grid>
                         
                         <Label Grid.Row="3">Presets</Label>

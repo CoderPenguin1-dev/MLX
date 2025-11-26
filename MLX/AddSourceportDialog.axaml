@@ -34,7 +34,7 @@
                         <TextBox Name="SourceportPathTextBox"></TextBox>
                         <Button Grid.Column="1" Name="SourceportPathButton" Click="SourceportPathButton_OnClick">...</Button>
                 </Grid>
-                <Label Grid.Row="4" HorizontalAlignment="Center">Optional Source Port Arguments</Label>
+                <Label Grid.Row="4" HorizontalAlignment="Center">Extra Arguments</Label>
                 <TextBox Name="SourceportArgumentsTextBox" Grid.Row="5"></TextBox>
                 <Button Name="SaveSourceportButton" Grid.Row="6" HorizontalAlignment="Center" Click="SaveSourceportButton_OnClick">Add Source Port</Button>
         </Grid>

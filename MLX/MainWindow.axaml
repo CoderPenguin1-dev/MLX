@@ -40,8 +40,8 @@
                                 <Button Name="AddSourcePortButton" Grid.Column="1" VerticalAlignment="Top" Click="AddSourcePortButton_OnClick">+</Button>
                                 <Button Name="RemoveSourcePortButton" Grid.Column="2" VerticalAlignment="Top" Click='RemoveSourcePortButton_OnClick'>-</Button>
                         </Grid>
-                        <Label Grid.Row="4">Extra Parameters</Label>
-                        <TextBox Name="ExtraParametersTextBox" Grid.Row="5" KeyDown="ExtraParametersTextBox_OnKeyDown"></TextBox>
+                        <Label Grid.Row="4">Extra Arguments</Label>
+                        <TextBox Name="ExtraArgumentsTextBox" Grid.Row="5" KeyDown="ExtraArgumentsTextBox_OnKeyDown"></TextBox>
                         <Button Name="LaunchButton" Grid.Row="6" HorizontalAlignment="Stretch" Click="LaunchButton_OnClick">Launch</Button>
                 </Grid>
                 

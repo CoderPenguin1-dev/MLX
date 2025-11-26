@@ -149,8 +149,8 @@ public partial class MainWindow : Window
             }
         }
         
-        if (ExtraParametersTextBox.Text != null)
-            args += $" {ExtraParametersTextBox.Text}";
+        if (ExtraArgumentsTextBox.Text != null)
+            args += $" {ExtraArgumentsTextBox.Text}";
 
         string details = $"Playing in {SourceportComboBox.SelectedItem}";
         string state;
@@ -249,7 +249,6 @@ public partial class MainWindow : Window
         _externalFilePaths.Clear();
         ExternalFilesListBox.Items.Clear();
     }
-    
     #endregion
 
     #region Presets
@@ -262,7 +261,7 @@ public partial class MainWindow : Window
         if (presetSettings != null)
         {
             List<string> presetFile =
-                [(string)SourceportComboBox.SelectedItem, (string)GameComboBox.SelectedItem, ExtraParametersTextBox.Text];
+                [(string)SourceportComboBox.SelectedItem, (string)GameComboBox.SelectedItem, ExtraArgumentsTextBox.Text];
 
             string files = "";
             foreach (string file in _externalFilePaths)
@@ -290,7 +289,7 @@ public partial class MainWindow : Window
             {
                 GameComboBox.SelectedIndex = 0;
                 SourceportComboBox.SelectedIndex = 0;
-                ExtraParametersTextBox.Text = null;
+                ExtraArgumentsTextBox.Text = null;
                 _externalFilePaths.Clear();
                 _usePresetNameWithRpc = false;
             }
@@ -308,7 +307,7 @@ public partial class MainWindow : Window
                     GameComboBox.SelectedItem = presetFile[1];
                 else GameComboBox.SelectedIndex = 0;
             
-                ExtraParametersTextBox.Text =  presetFile[2]; 
+                ExtraArgumentsTextBox.Text =  presetFile[2]; 
             
                 _externalFilePaths.Clear();
                 if (presetFile[3].Length > 0)
@@ -365,7 +364,7 @@ public partial class MainWindow : Window
         GenericFunctions.RemoveSelectedItemFromComboBox
             (ref GameComboBox, Constants.GamesFolder, Constants.GameExtension, RefreshGamesComboBox);
 
-    private async void ExtraParametersTextBox_OnKeyDown(object? sender, KeyEventArgs e)
+    private async void ExtraArgumentsTextBox_OnKeyDown(object? sender, KeyEventArgs e)
     {
         if (e.Key == Key.Enter)
         {
@@ -380,7 +379,7 @@ public partial class MainWindow : Window
 
             var files = await StorageProvider.OpenFilePickerAsync(options);
             if (files.Count > 0)
-                ExtraParametersTextBox.Text += $"\"{files[0].TryGetLocalPath()}\"";
+                ExtraArgumentsTextBox.Text += $"\"{files[0].TryGetLocalPath()}\"";
         }
     }
 }

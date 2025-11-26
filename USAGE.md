@@ -41,10 +41,13 @@ There are two main "sections" of this window: The "Game" side, and the "Modding"
 ### 2.1.1: The "Game" Side
 This side contains drop-downs for what game you wish to play, as well as what port you wish to use.
 
-You can also find the Extra Parameters textbox and the Launch button here.
+You can also find the Extra Arguments textbox and the Launch button here.
 
-The Extra Parameters textbox here allows you to define preset-specific parameters that can control certain aspects of the port.
-Refer to your port's documentation for their specific parameters, or the Doom Wiki (at doomwiki.org) for id Tech 1 parameters.
+The Extra Arguments textbox here allows you to define preset-specific arguments that can control certain aspects of the port.
+Refer to your port's documentation for their specific arguments, or the Doom Wiki (at doomwiki.org) for id Tech 1 arguments.
+
+You can hit Enter/Return while typing into the Extra Arguments textbox to insert a file path into the text box.
+This will bring up a file dialog to allow you to do such.
 
 You can add a game or source port by clicking their respective Add `+` buttons, or remove them with their Remove `-` buttons.
 Either of the Add buttons will bring up a dialog [2.2] to add in the new game/port to their list.
@@ -77,11 +80,11 @@ This dialog pops up when you select the Add Source Port button [2.1.1].
 Here it asks for
 * The name (what you'll see in the port drop-down [2.1.1] and what others will see on the RP),
 * The file path (where the port executable is located),
-* And extra parameters.
+* And extra arguments.
 
 You can either manually enter a file path, or use the Select File `...` button to bring up a file dialog.
 
-The extra parameters seen here are similar to the ones seen in the Main Window [2.1.1].
+The extra arguments seen here are similar to the ones seen in the Main Window [2.1.1].
 However, the difference here is that they will always be applied as long as that port is selected in the drop-down.
 This is particuarly useful when you must always have a certain option set, but don't want to clutter up your presets with it.
 

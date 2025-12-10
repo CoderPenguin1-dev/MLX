@@ -14,7 +14,7 @@ MLX attempts to be the successor to Minty Launcher in some ways, but is not the 
 
 # Building
 ## Prerequisites
-* [.NET 10 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
+* [.NET 10.0 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
 * [Avalonia](https://github.com/avaloniaui/avalonia)
 * [DiscordRichPresence](https://github.com/Lachee/discord-rpc-csharp)
 

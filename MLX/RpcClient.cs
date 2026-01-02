@@ -15,11 +15,7 @@
    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using System;
 using DiscordRPC;
-using DiscordRPC.Logging;
-using System.Diagnostics;
-using Avalonia.Controls.Shapes;
 using Path = System.IO.Path;
 
 namespace MLX;

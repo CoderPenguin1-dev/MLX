@@ -15,11 +15,7 @@
    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using System;
 using System.IO;
-using System.Net;
-using System.Runtime.InteropServices.JavaScript;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
@@ -33,19 +29,6 @@ public partial class AddSourceportDialog : Window
         InitializeComponent();
     }
 
-    private async void OpenPortSelector()
-    {
-        FilePickerOpenOptions options = new()
-        {
-            Title = "Select source port executable",
-            AllowMultiple = false,
-            FileTypeFilter = [FileFilters.Applications, FileFilters.All]
-        };
-        var files = await StorageProvider.OpenFilePickerAsync(options);
-        if (files?.Count > 0)
-            SourceportPathTextBox.Text = files[0].TryGetLocalPath();
-    }
-
     private void SaveSourceportButton_OnClick(object? sender, RoutedEventArgs e)
     {
         if (PortNameTextBox.Text != null && SourceportPathTextBox.Text != null && PortNameTextBox.Text.ToLower() != "none")
@@ -57,8 +40,16 @@ public partial class AddSourceportDialog : Window
         }
     }
 
-    private void SourceportPathButton_OnClick(object? sender, RoutedEventArgs e)
+    private async void SourceportPathButton_OnClick(object? sender, RoutedEventArgs e)
     {
-        OpenPortSelector();
+        FilePickerOpenOptions options = new()
+        {
+            Title = "Select source port executable",
+            AllowMultiple = false,
+            FileTypeFilter = [FileFilters.Applications, FileFilters.All]
+        };
+        var files = await StorageProvider.OpenFilePickerAsync(options);
+        if (files?.Count > 0)
+            SourceportPathTextBox.Text = files[0].TryGetLocalPath();
     }
 }

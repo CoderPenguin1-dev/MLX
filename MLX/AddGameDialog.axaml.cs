@@ -117,6 +117,13 @@ public partial class AddGameDialog : Window
                 "66d686b1ed6d35ff103f15dbd30e0341", "a5de95a3162e71b5ffc568ba2343cd46", "1636b642aa8fcfd5e0096eefbea1f6d9",
                 "fb50b962dc6570630378a8d9f4679e70", "3117e399cdb4298eaa3941625f4b2923", "1e4cb4ef075ad344dd63971637307e04"
             ]
+        },
+        {
+            "Hacx",
+            [
+                "65ed74d522bdf6649c2831b13b9e02b4", "402ca45bb90520bfef0dec6baac5889e", "1511a7032ebc834a3884cf390d7f186e",
+                "b7fd2f43f3382cf012dc6b097a3cb182", "793f07ebadb3d7353ee5b6b6429d9afa", "ad8db94ef3bdb8522f57d4c5b3b92bd7"
+            ]
         }
     };
 

@@ -124,6 +124,18 @@ public partial class AddGameDialog : Window
                 "65ed74d522bdf6649c2831b13b9e02b4", "402ca45bb90520bfef0dec6baac5889e", "1511a7032ebc834a3884cf390d7f186e",
                 "b7fd2f43f3382cf012dc6b097a3cb182", "793f07ebadb3d7353ee5b6b6429d9afa", "ad8db94ef3bdb8522f57d4c5b3b92bd7"
             ]
+        },
+        {
+            "Strife",
+            [
+                "2fed2031a5b03892106e0f117f17901f", "8f2d3a6a289f5d2f2f9c1eec02b47299"
+            ]
+        },
+        {
+            "Strife Demo",
+            [
+                "bb545b9c4eca0ff92c14d466b3294023", "de2c8dcad7cca206292294bdab524292"
+            ]
         }
     };
 

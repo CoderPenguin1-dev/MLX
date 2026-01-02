@@ -256,7 +256,8 @@ public partial class MainWindow : Window
         AddPresetDialog presetDialog = new AddPresetDialog()
         {
             WindowStartupLocation = WindowStartupLocation.CenterOwner,
-            SelectedPreset = (string)PresetsComboBox.SelectedItem
+            SelectedPreset = (string)PresetsComboBox.SelectedItem,
+            UsePresetNameRpc = _usePresetNameWithRpc
         };
         presetDialog.WindowStartupLocation = WindowStartupLocation.CenterOwner;
         

@@ -28,10 +28,7 @@
         
         <Grid RowDefinitions="Auto, Auto, Auto, Auto" RowSpacing="15" Margin="30">
                 <Label Grid.Row="0" HorizontalAlignment="Center">Preset Name</Label>
-                <Grid Grid.Row="1" ColumnDefinitions="*, Auto" ColumnSpacing="15">
-                    <TextBox Name="PresetNameTextBox" HorizontalAlignment="Stretch"></TextBox>
-                    <CheckBox Grid.Column="1" Name="UseCurrentPresetCheckBox" IsCheckedChanged="ToggleButton_OnIsCheckedChanged">Use Current Preset</CheckBox>
-                </Grid>
+                <TextBox Grid.Row="1" Name="PresetNameTextBox" HorizontalAlignment="Stretch"></TextBox>
                 <CheckBox Name="UsePresetNameCheckBox" Grid.Row="2" HorizontalAlignment="Center" IsChecked="False">Use Preset Name In Rich Presence</CheckBox>
                 <Button Name="SavePresetButton" Grid.Row="3" HorizontalAlignment="Center" Click="SavePresetButton_OnClick">Save Preset</Button>
         </Grid>

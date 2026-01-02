@@ -27,6 +27,7 @@ namespace MLX;
 
 public partial class AddPresetDialog : Window
 {
+    public string SelectedPreset { get; set; } = "";
     public AddPresetDialog()
     {
         InitializeComponent();
@@ -39,5 +40,19 @@ public partial class AddPresetDialog : Window
             string[] settings = [PresetNameTextBox.Text, UsePresetNameCheckBox.IsChecked.ToString()];
             Close(settings);
         }
+    }
+
+    private void ToggleButton_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
+    {
+        PresetNameTextBox.IsEnabled = !UseCurrentPresetCheckBox.IsChecked ?? false;
+        if (UseCurrentPresetCheckBox.IsChecked ?? false)
+            PresetNameTextBox.Text = SelectedPreset;
+        else PresetNameTextBox.Text = string.Empty;
+    }
+
+    private void Control_OnLoaded(object? sender, RoutedEventArgs e)
+    {
+        if (SelectedPreset == "None")
+            UseCurrentPresetCheckBox.IsEnabled = false;
     }
 }

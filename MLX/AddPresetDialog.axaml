@@ -19,15 +19,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="200"
-        Width="450" Height="200"
+        mc:Ignorable="d" d:DesignWidth="530" d:DesignHeight="215"
+        Width="530" Height="215"
         CanResize="False"
         x:Class="MLX.AddPresetDialog"
-        Title="Preset">
+        Title="Preset"
+        Loaded="Control_OnLoaded">
         
         <Grid RowDefinitions="Auto, Auto, Auto, Auto" RowSpacing="15" Margin="30">
                 <Label Grid.Row="0" HorizontalAlignment="Center">Preset Name</Label>
-                <TextBox Name="PresetNameTextBox" Grid.Row="1" HorizontalAlignment="Stretch"></TextBox>
+                <Grid Grid.Row="1" ColumnDefinitions="*, Auto" ColumnSpacing="15">
+                    <TextBox Name="PresetNameTextBox" HorizontalAlignment="Stretch"></TextBox>
+                    <CheckBox Grid.Column="1" Name="UseCurrentPresetCheckBox" IsCheckedChanged="ToggleButton_OnIsCheckedChanged">Use Current Preset</CheckBox>
+                </Grid>
                 <CheckBox Name="UsePresetNameCheckBox" Grid.Row="2" HorizontalAlignment="Center" IsChecked="False">Use Preset Name In Rich Presence</CheckBox>
                 <Button Name="SavePresetButton" Grid.Row="3" HorizontalAlignment="Center" Click="SavePresetButton_OnClick">Save Preset</Button>
         </Grid>

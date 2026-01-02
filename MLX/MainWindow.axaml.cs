@@ -254,7 +254,11 @@ public partial class MainWindow : Window
     #region Presets
     private async void AddPresetButton_OnClick(object? sender, RoutedEventArgs e)
     {
-        AddPresetDialog presetDialog = new AddPresetDialog();
+        AddPresetDialog presetDialog = new AddPresetDialog()
+        {
+            WindowStartupLocation = WindowStartupLocation.CenterOwner,
+            SelectedPreset = (string)PresetsComboBox.SelectedItem
+        };
         presetDialog.WindowStartupLocation = WindowStartupLocation.CenterOwner;
         
         string[]? presetSettings = await presetDialog.ShowDialog<string[]?>(this);

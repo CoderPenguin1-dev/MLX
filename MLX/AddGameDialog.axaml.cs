@@ -31,7 +31,7 @@ public partial class AddGameDialog : Window
     /// Contains the names (key) and hashes (value) of every known game.
     /// </summary>
     // The hashes were gathered from the game's respective DoomWiki (doomwiki.org) page.
-    private readonly Dictionary<string, string[]> _games = new()
+    private readonly Dictionary<string, string[]> _knownGames = new()
     {
         { 
             "The Ultimate Doom", 
@@ -156,7 +156,18 @@ public partial class AddGameDialog : Window
         InitializeComponent();
     }
 
-    private async void OpenGamePathSelector()
+    private void SaveGameButton_OnClick(object? sender, RoutedEventArgs e)
+    {
+        if (GameNameTextBox.Text != null && GamePathTextBox.Text != null && GameNameTextBox.Text.ToLower() != "none")
+        {
+            string[] gameFile = [GamePathTextBox.Text];
+            string gameName = StringKeyCode.ToKeyCode(GameNameTextBox.Text);
+            File.WriteAllLines($"{Constants.GamesFolder}/{gameName}.{Constants.GameExtension}", gameFile);
+            Close(GameNameTextBox.Text);
+        }
+    }
+
+    private async void GamePathButton_OnClick(object? sender, RoutedEventArgs e)
     {
         FilePickerOpenOptions options = new()
         {
@@ -169,7 +180,7 @@ public partial class AddGameDialog : Window
         {
             GamePathTextBox.Text = files[0].TryGetLocalPath();
             string md5 = GetHash(files[0].TryGetLocalPath());
-            foreach (var game in _games)
+            foreach (var game in _knownGames)
             {
                 bool foundGame = false;
                 foreach (string hash in game.Value)
@@ -188,21 +199,5 @@ public partial class AddGameDialog : Window
                 }
             }
         }
-    }
-
-    private void SaveGameButton_OnClick(object? sender, RoutedEventArgs e)
-    {
-        if (GameNameTextBox.Text != null && GamePathTextBox.Text != null && GameNameTextBox.Text.ToLower() != "none")
-        {
-            string[] gameFile = [GamePathTextBox.Text];
-            string gameName = StringKeyCode.ToKeyCode(GameNameTextBox.Text);
-            File.WriteAllLines($"{Constants.GamesFolder}/{gameName}.{Constants.GameExtension}", gameFile);
-            Close(GameNameTextBox.Text);
-        }
-    }
-
-    private void GamePathButton_OnClick(object? sender, RoutedEventArgs e)
-    {
-        OpenGamePathSelector();
     }
 }

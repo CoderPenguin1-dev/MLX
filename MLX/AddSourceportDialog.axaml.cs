@@ -15,7 +15,9 @@
    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using System;
 using System.IO;
+using System.Collections.Generic;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
@@ -24,6 +26,20 @@ namespace MLX;
 
 public partial class AddSourceportDialog : Window
 {
+    /// <summary>
+    /// Contains a list of a port's executable name (key) and their proper name (value).
+    /// </summary>
+    private readonly Dictionary<string, string> _knownPorts = new()
+    {
+        { "dsda-doom", "DSDA-Doom" }, { "nyan-doom", "Nyan Doom" }, { "lzdoom", "LZDoom" },
+        { "uzdoom", "UZDoom" }, { "gzdoom", "GZDoom" }, { "zdoom", "ZDoom" },
+        { "chocolate-doom", "Chocolate Doom" }, { "chocolate-heretic", "Chocolate Heretic" }, { "chocolate-hexen", "Chocolate Hexen" },
+        { "chocolate-strife", "Chocolate Strife" }, { "crispy-doom", "Crispy Doom" }, { "crispy-heretic", "Crispy Heretic" },
+        { "crispy-hexen", "Crispy Hexen" }, { "crispy-strife", "Crispy Strife" }, { "cherry-doom", "Cherry Doom" },
+        { "woof", "Woof!" }, { "nugget-doom", "Nugget Doom" }, { "doomretro", "DOOM Retro" },
+        { "fdwl", "From Doom With Love" }, { "prboom-plus", "PRBoom+" }, { "prboom", "PRBoom" }
+    };
+    
     public AddSourceportDialog()
     {
         InitializeComponent();
@@ -50,6 +66,20 @@ public partial class AddSourceportDialog : Window
         };
         var files = await StorageProvider.OpenFilePickerAsync(options);
         if (files?.Count > 0)
+        {
             SourceportPathTextBox.Text = files[0].TryGetLocalPath();
+            
+            // Automatically fill in the port name.
+            string portFileName = Path.GetFileNameWithoutExtension(files[0].TryGetLocalPath());
+            foreach (var port in _knownPorts)
+            {
+                if (portFileName.Contains(port.Key, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    PortNameTextBox.Text = port.Value;
+                    break;
+                }
+            }
+        }
+
     }
 }

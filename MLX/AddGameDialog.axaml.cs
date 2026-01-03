@@ -180,9 +180,9 @@ public partial class AddGameDialog : Window
         {
             GamePathTextBox.Text = files[0].TryGetLocalPath();
             string md5 = GetHash(files[0].TryGetLocalPath());
+            bool foundGame = false;
             foreach (var game in _knownGames)
             {
-                bool foundGame = false;
                 foreach (string hash in game.Value)
                 {
                     if (hash == md5)
@@ -196,6 +196,23 @@ public partial class AddGameDialog : Window
                 {
                     GameNameTextBox.Text = game.Key;
                     break;
+                }
+            }
+            
+            if (!foundGame) // Check if the game may be Freedoom. Can't store the hash as it's under constant development.
+            {
+                string fileName = Path.GetFileNameWithoutExtension(files[0].TryGetLocalPath());
+                switch (fileName.ToLower())
+                {
+                    case "freedoom1":
+                        GameNameTextBox.Text = "Freedoom: Phase 1";
+                        break;
+                    case "freedoom2":
+                        GameNameTextBox.Text = "Freedoom: Phase 2";
+                        break;
+                    case "freedm":
+                        GameNameTextBox.Text = "FreeDM";
+                        break;
                 }
             }
         }

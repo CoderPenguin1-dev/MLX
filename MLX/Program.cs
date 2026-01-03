@@ -34,11 +34,14 @@ class Program
             RpcClient.Initialize();
             BuildAvaloniaApp()
                 .StartWithClassicDesktopLifetime(args);
-            RpcClient.Dispose();
         }
         catch (Exception e)
         {
-            File.WriteAllLines("mlx.error.log", [e.Message, e.StackTrace]);
+            File.WriteAllLines("mlx.error.log", [e.Message, e.Source, e.StackTrace]);
+        }
+        finally
+        {
+            RpcClient.Dispose();
         }
     }
 

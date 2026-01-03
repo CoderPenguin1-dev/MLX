@@ -83,6 +83,7 @@ Here it asks for
 * And extra arguments.
 
 You can either manually enter a file path, or use the Select File `...` button to bring up a file dialog.
+The name will generally be automatically filled in after selecting a file, but you can manually set one yourself as well.2
 
 The extra arguments seen here are similar to the ones seen in the Main Window [2.1.1].
 However, the difference here is that they will always be applied as long as that port is selected in the drop-down.
@@ -98,11 +99,12 @@ Here it asks for
 You can either manually enter a file path, or use the Select File `...` button to bring up a file dialog.
 The name will generally be automatically filled in after selecting a file, but you can manually set one yourself as well.
 
-### 2.2.3: New Preset Dialog
+### 2.2.3: Create Preset Dialog
 This dialog pops up when you select the New Preset button [2.1.2]
 
 Here it asks for
 * The name (what you'll see in the port drop-down [2.1.1] and what others will see on the RP),
 * If you wish to display the preset name in the RP.
 
-By default, MLX shows the first two loaded mod file names in the RP, but you can make it show the preset name instead by selecting that option.
+By default, MLX shows the first two loaded mod file names in the RP, but you can make it show the preset name instead by enabling the option.
+The name and the option to show the preset name in the RP will be automatically filled in/enabled if there was a preset already selected.

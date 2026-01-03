@@ -23,7 +23,7 @@
         Width="450" Height="215"
         CanResize="False"
         x:Class="MLX.AddPresetDialog"
-        Title="Preset"
+        Title="Create Preset"
         Loaded="Control_OnLoaded">
         
         <Grid RowDefinitions="Auto, Auto, Auto, Auto" RowSpacing="15" Margin="30">

@@ -32,7 +32,7 @@ Build & Run Debug binary:
 ```
 dotnet run
 ```
-It should open up afterwards. The build will be in `MLX\bin\Debug\net9.0`.
+It should open up afterwards. The build will be in `MLX\bin\Debug\net10.0`.
 
 # Credits & Legalese
 MLX is programmed by CoderPenguin1.

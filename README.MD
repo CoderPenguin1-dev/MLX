@@ -1,3 +1,5 @@
+# NOTICE: This repo has been archived as it has been moved to [Codeberg](https://codeberg.org/CoderPenguin1/MLX) instead.
+
 <div align="center">
     <img src="Assets/mlx.png" width="150" height="150">
     <h1>MLX</h1>
